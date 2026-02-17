@@ -1,0 +1,32 @@
+{
+  "name": "placemark_app",
+  "version": "1.0.0",
+  "description": "POI placemark application",
+  "keywords": [
+    "poi",
+    "location",
+    "node"
+  ],
+  "homepage": "https://github.com/oohlah/full_stack_one#readme",
+  "bugs": {
+    "url": "https://github.com/oohlah/full_stack_one/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/oohlah/full_stack_one.git"
+  },
+  "license": "MIT",
+  "author": "\"Orla Fitzgerald\"",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "prettier": "^3.8.1"
+  }
+}
