@@ -1,4 +1,5 @@
 import { dashboardController } from "./controllers/dashboard-controller.js";
+import { accountsController } from "./controllers/accounts-controller.js";
 
 export const webRoutes = [
   
@@ -9,7 +10,7 @@ export const webRoutes = [
   { method: "POST", path: "/register", config: accountsController.signup },
   { method: "POST", path: "/authenticate", config: accountsController.login },
 
-    { method: "GET", path: "/", config: dashboardController.index },
+    { method: "GET", path: "/dashboard", config: dashboardController.index },
 
 
 ];
