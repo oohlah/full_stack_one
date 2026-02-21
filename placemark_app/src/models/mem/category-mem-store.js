@@ -13,6 +13,9 @@ export const categoryMemStore = {
     return category;
   },
 
+  async getUserCategories(userid) {
+    return categories.filter((category) => category.userid === userid);
+  },
   async getCategoryById(id) {
     return categories.find((category) => category._id === id);
   },
