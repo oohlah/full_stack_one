@@ -11,3 +11,7 @@ export const UserCredentials = {
     email: Joi.string().email().required(),
     password: Joi.string().required(),
 };
+
+export const CategorySpec = {
+    title: Joi.string().required(),
+};
