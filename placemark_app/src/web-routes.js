@@ -1,6 +1,6 @@
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
-
+import { categoryController } from "./controllers/category-controller.js";
 export const webRoutes = [
   
   { method: "GET", path: "/", config: accountsController.index },
@@ -12,6 +12,8 @@ export const webRoutes = [
 
    { method: "GET", path: "/dashboard", config: dashboardController.index },
    { method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory},
+  
+   { method: "GET", path: "/category/{id}", config: categoryController.index},
 
 
 ];
