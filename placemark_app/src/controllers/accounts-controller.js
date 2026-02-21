@@ -20,7 +20,7 @@ export const accountsController = {
       payload: UserSpec,
       options: {abortEarly: false},
       failAction: function (request, h, error) {
-        return h.view("signup-view", { title: "Sign up error" }).takeover().code(400);
+        return h.view("signup-view", { title: "Sign up error", errors: error.details }).takeover().code(400);
       },
     },
     handler: async function (request, h) {
