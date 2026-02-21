@@ -18,6 +18,7 @@ export const accountsController = {
     auth: false,
     validate: {
       payload: UserSpec,
+      options: {abortEarly: false},
       failAction: function (request, h, error) {
         return h.view("signup-view", { title: "Sign up error" }).takeover().code(400);
       },
