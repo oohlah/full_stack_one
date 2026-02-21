@@ -12,21 +12,24 @@ export const categoryController = {
     },
   },
 
-  addPOI: {
+  addPlacemark: {
     handler: async function (request, h) {
-      // get category by id
-      const newPOI = {
+      const category = await db.getCategoryById(request.params.id);
+      const newPlacemark = {
         name: request.payload.name,
+        category: category.title,
+        description: request.payload.description,
+        // analytics
         // image
         // weather
         // location
       };
-      // add poi to db
+      await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       return h.redirect(`/category/${category._id}`);
     },
   },
 
-  deletePOI: {
+  deletePlacemark: {
     handler: async function (request, h) {
       // get category by id
       // delete POI with id
