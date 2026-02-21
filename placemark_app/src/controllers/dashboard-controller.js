@@ -4,7 +4,8 @@ import { CategorySpec } from "../models/joi-schema.js"
 export const dashboardController = {
   index: {
     handler: async function (request, h) {
-      const categories = await db.categoryStore.getAllCategories();
+      const loggedInUser = request.auth.credentials;
+      const categories = await db.categoryStore.getUserCategories(loggedInUser._id);
       const viewData = {
         title: "POI Dashboard",
         categories: categories,
