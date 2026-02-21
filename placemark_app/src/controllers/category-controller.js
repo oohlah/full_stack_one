@@ -7,6 +7,7 @@ export const categoryController = {
       const viewData = {
         title: "categories",
         category: category,
+        placemarks: category.placemark,
       };
       return h.view("category-view", viewData);
     },
