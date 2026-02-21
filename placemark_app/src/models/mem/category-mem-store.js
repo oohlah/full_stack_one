@@ -1,5 +1,5 @@
 import { v4 } from "uuid";
-import { placemarkMemStore } from "./placemark-mem-store";
+import { placemarkMemStore } from "./placemark-mem-store.js";
 
 let categories = [];
 
@@ -20,7 +20,7 @@ export const categoryMemStore = {
   },
   async getCategoryById(id) {
     const list = categories.find((category) => category._id === id);
-    list.placemarks = await db.placemarkMemStore.getPlacemarkByCategoryId(list._id);
+    list.placemark = await placemarkMemStore.getPlacemarkByCategoryId(list._id);
     return list;
   },
 
