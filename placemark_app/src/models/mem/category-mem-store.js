@@ -20,7 +20,7 @@ export const categoryMemStore = {
     return categories.find((category) => category._id === id);
   },
 
-  async deleteCategoriesById(id) {
+  async deleteCategoryById(id) {
     const index = categories.findIndex((category) => category._id === id);
     categories.splice(index, 1);
   },
