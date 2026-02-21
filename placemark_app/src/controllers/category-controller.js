@@ -14,7 +14,7 @@ export const categoryController = {
 
   addPlacemark: {
     handler: async function (request, h) {
-      const category = await db.getCategoryById(request.params.id);
+      const category = await db.categoryStore.getCategoryById(request.params.id);
       const newPlacemark = {
         name: request.payload.name,
         category: category.title,
