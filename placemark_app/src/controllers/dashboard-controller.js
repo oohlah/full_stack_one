@@ -1,10 +1,12 @@
+import { db } from "../models/db.js";
+
 export const dashboardController = {
   index: {
     handler: async function (request, h) {
-      // get pois
+      const categories = await db.categoryStore.getAllCategories();
       const viewData = {
         title: "POI Dashboard",
-        // categore: category,
+        categories: categories,
       };
       return h.view("dashboard-view", viewData);
     },
