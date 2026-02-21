@@ -17,4 +17,9 @@ export const placemarkMemStore = {
   async getPlacemarkByCategoryId(id) {
     return placemarks.filter((placemark) => placemark.categoryid === id);
   },
+
+   async deletePlacemark(id) { 
+    const index = placemarks.findIndex((placemark) => placemark._id === id);
+    if (index !== -1) placemarks.splice(index, 1);
+  },
 };
