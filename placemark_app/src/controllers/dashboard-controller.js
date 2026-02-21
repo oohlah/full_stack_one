@@ -21,7 +21,7 @@ export const dashboardController = {
       return h.redirect("/dashboard");
     
   },
-
+  },
   deleteCategory: {
     handler: async function (request, h) {
       const category = await db.categoryStore.getCategoryById(request.params.id);
