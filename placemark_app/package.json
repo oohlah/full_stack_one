@@ -20,7 +20,7 @@
   "type": "module",
   "main": "src/server.js",
   "scripts": {
-    "test": "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**.js -exit",
+    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js"
   },
