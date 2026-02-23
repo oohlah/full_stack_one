@@ -27,7 +27,7 @@ export const userMemStore = {
 
   async deleteUserById(id) {
     const index = users.findIndex((user) => user._id === id);
-    users.splice(index, 1);
+    if(index != -1) users.splice(index, 1);
   },
 
   async deleteAll() {
