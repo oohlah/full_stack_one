@@ -31,11 +31,11 @@ suite("User Model tests", () => {
   });
 
   test("get a user - success", async () => {
-   let returnedUser = await db.userStore.addUser(maggie);
-   let userEmail = await db.userStore.getUserByEmail(maggie.email);
-   assert.equal(userEmail.email, maggie.email);
-   let userId = await db.userStore.getUserById(maggie._id);
-   assert.equal(userId._id, maggie._id);
+    const user = await db.userStore.addUser(maggie);
+    const returnedUser1 = await db.userStore.getUserById(user._id);
+    assert.deepEqual(user, returnedUser1);
+    const returnedUser2 = await db.userStore.getUserByEmail(user.email);
+    assert.deepEqual(user, returnedUser2);
   });
 
   test("delete One User - success", async () => {
@@ -53,9 +53,8 @@ suite("User Model tests", () => {
   });
 
   test("delete One User - fail", async () => {
-  let returnedUsers = await db.userStore.getAllUsers();
-   console.log(returnedUsers);
-   let deleteUser = await db.userStore.deleteUserById("");
+   await db.userStore.deleteUserById("");
+   let returnedUsers = await db.userStore.getAllUsers();
    assert.equal(returnedUsers.length, 3);
   });
 });
