@@ -45,15 +45,18 @@ suite("User Model tests", () => {
     const deletedUser = await db.userStore.getUserById(testUsers[0]._id);
     assert.isNull(deletedUser);
 
-   
   });
 
   test("get a user - bad params", async () => {
-   
+   assert.isNull (await db.userStore.getUserById("123"));
+   assert.isNull(await db.userStore.getUserByEmail("123"));
   });
 
   test("delete One User - fail", async () => {
-  
+  let returnedUsers = await db.userStore.getAllUsers();
+   console.log(returnedUsers);
+   let deleteUser = await db.userStore.deleteUserById("");
+   assert.equal(returnedUsers.length, 3);
   });
 });
 
