@@ -22,7 +22,7 @@ export const userMemStore = {
   async getUserByEmail(email) {
     let u = users.find((user) => user.email === email);
     if(u == undefined){u = null};
-    return null;
+    return u;
   },
 
   async deleteUserById(id) {
