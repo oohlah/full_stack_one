@@ -15,3 +15,8 @@ export const UserCredentials = {
 export const CategorySpec = {
     title: Joi.string().required(),
 };
+
+export const placemarkSpec = {
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+};
