@@ -31,3 +31,19 @@ export const testUsers = [
   }
 ];
 
+export const river = {
+    title: "River",
+    
+};
+
+export const testCategories = [
+  {
+    title: "Bridge"
+  },
+  {
+    title: "Museaum"
+  },
+  {
+    title: "mountain"
+  }
+];
