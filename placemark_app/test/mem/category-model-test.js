@@ -27,7 +27,13 @@ suite("Category Model tests", () => {
   assertSubset(river, returnedCategory);
   });
 
+   test("delete all categories", async () => {
+
+  });
+
   test("get a category by Id - failure", async () => {
+  assert.isNull(await db.categoryStore.getCategoryById(""));
+  assert.isNull(await db.categoryStore.getCategoryById("123"));
   
   });
 

@@ -20,8 +20,11 @@ export const categoryMemStore = {
   },
   async getCategoryById(id) {
     const list = categories.find((category) => category._id === id);
-    list.placemark = await placemarkMemStore.getPlacemarkByCategoryId(list._id);
-    return list;
+    if(list){
+      list.placemark = await placemarkMemStore.getPlacemarkByCategoryId(list._id);
+      return list;
+    }
+    return null;
   },
 
   async deleteCategoryById(id) {
