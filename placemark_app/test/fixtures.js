@@ -44,21 +44,10 @@ export const testCategories = [
     title: "Museaum"
   },
   {
-    title: "mountain"
+    title: "Mountain"
   }
 ];
 
-export const testCategories = [
-  {
-    title: "Bridge"
-  },
-  {
-    title: "Museaum"
-  },
-  {
-    title: "mountain"
-  }
-];
 
 export const liffey = {
   name: "Liffey",
