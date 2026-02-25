@@ -31,7 +31,11 @@ suite("Category Model tests", () => {
     });
 
     test("delete all placemarks", async () => {
-  
+    const allPlacemarks = await db.placemarkStore.getAllPlacemarks();
+    assert.equal(allPlacemarks.length, testPlacemarks.length);
+    await db.placemarkStore.deleteAllPlacemarks();
+    const deletedPlacemarks = await db.placemarkStore.getAllPlacemarks();
+    assert.equal(deletedPlacemarks, 0);
  
   });
   });
