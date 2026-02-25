@@ -40,7 +40,10 @@ suite("Category Model tests", () => {
   });
 
   test("delete category by Id - success", async () => {
-   
+  const id = testCategories[0];
+  await db.categoryStore.deleteCategoryById(id);
+  const returnedCategories = await db.categoryStore.getAllCategories();
+  assert.equal(returnedCategories.length, testCategories.length)
   });
 
    test("delete category by Id - failure", async () => {
