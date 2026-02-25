@@ -47,3 +47,35 @@ export const testCategories = [
     title: "mountain"
   }
 ];
+
+export const testCategories = [
+  {
+    title: "Bridge"
+  },
+  {
+    title: "Museaum"
+  },
+  {
+    title: "mountain"
+  }
+];
+
+export const liffey = {
+  name: "Liffey",
+  description: "It's in Europe"
+}
+export const testPlacemarks = [
+  {
+    name: "Liffey",
+    description: "it's in Europe"
+  },
+
+  {
+    name: "Yangtze",
+    description: "it's in Asia"
+  },
+{
+   name: "Missisippi",
+   description: "It's in North America"
+}
+]

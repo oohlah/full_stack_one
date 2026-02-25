@@ -46,7 +46,5 @@ suite("Category Model tests", () => {
   assert.equal(returnedCategories.length, testCategories.length)
   });
 
-   test("delete category by Id - failure", async () => {
-  
-  });
+
   });
