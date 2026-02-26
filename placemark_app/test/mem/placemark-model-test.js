@@ -38,4 +38,18 @@ suite("Category Model tests", () => {
     assert.equal(deletedPlacemarks, 0);
  
   });
+
+  test("get a placemark by Id - success", async () => {
+   const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
+   const returnedPlacemark = await db.placemarkStore.getPlacemarkById(liffey._id);
+   assertSubset(liffey, returnedPlacemark); 
+  });
+
+
+   test("get a placemark by Id - failure", async () => {
+   const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
+   const returnedPlacemark = await db.placemarkStore.getPlacemarkById("123");
+   assert.isNull(returnedPlacemark);
+  });
+
   });

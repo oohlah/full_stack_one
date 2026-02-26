@@ -27,6 +27,7 @@ suite("Category Model tests", () => {
   assertSubset(river, returnedCategory);
   });
 
+
    test("delete all categories", async () => {
    await db.categoryStore.deleteAllCategories();
    const returnedCategories = await db.categoryStore.getAllCategories();

@@ -18,6 +18,12 @@ export const placemarkMemStore = {
     return placemarks.filter((placemark) => placemark.categoryid === id);
   },
 
+  async getPlacemarkById(id){
+    let p = placemarks.find((placemark) => placemark._id === id);
+    if (p === undefined) {p = null};
+    return p;
+  },
+
    async deletePlacemark(id) { 
     const index = placemarks.findIndex((placemark) => placemark._id === id);
     if (index !== -1) placemarks.splice(index, 1);

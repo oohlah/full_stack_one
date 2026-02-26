@@ -18,15 +18,17 @@ suite("User Model tests", () => {
 
   test("create a user", async () => {
     const newUser = await db.userStore.addUser(maggie);
-    assertSubset(maggie, newUser)
+    assertSubset(maggie, newUser);
+    
   });
 
+
     test("delete all userApi", async () => {
-    let returnedUsers = await db.userStore.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    const returnedUsers = await db.userStore.getAllUsers();
+    assert.strictEqual(returnedUsers.length, 3);
     await db.userStore.deleteAll();
-    let returnedUsers2 = await db.userStore.getAllUsers();
-    assert.equal(returnedUsers2.length, 0);
+    const returnedUsers2 = await db.userStore.getAllUsers();
+    assert.strictEqual(returnedUsers2.length, 0);
    
   });
 
@@ -47,14 +49,14 @@ suite("User Model tests", () => {
 
   });
 
-  test("get a user - bad params", async () => {
+  test("get a user - bad params (fail)", async () => {
    assert.isNull (await db.userStore.getUserById("123"));
    assert.isNull(await db.userStore.getUserByEmail("123"));
   });
 
   test("delete One User - fail", async () => {
    await db.userStore.deleteUserById("");
-   let returnedUsers = await db.userStore.getAllUsers();
+   const returnedUsers = await db.userStore.getAllUsers();
    assert.equal(returnedUsers.length, 3);
   });
 });
