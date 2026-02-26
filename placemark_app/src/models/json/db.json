@@ -5,21 +5,47 @@
       "lastName": "Simpson",
       "email": "homer@simpson.com",
       "password": "secret",
-      "_id": "d8ccbda5-06ab-4c4b-a456-62943fea228b"
+      "_id": "61e99ca8-f33d-4ae1-85fb-bf1b31b18b69"
     },
     {
       "firstName": "Marge",
       "lastName": "Simpson",
       "email": "marge@simpson.com",
       "password": "secret",
-      "_id": "9d8bd89a-5b32-426f-a3a8-17608a56aea1"
+      "_id": "6ea73ffb-3e9d-4733-9f05-b267187fa6e7"
     },
     {
       "firstName": "Bart",
       "lastName": "Simpson",
       "email": "bart@simpson.com",
       "password": "secret",
-      "_id": "fcb691e5-c538-42e6-b965-2e5d7ade0d2f"
+      "_id": "644c37e5-9bf7-4e32-b2cc-8dba5ebbebc9"
+    }
+  ],
+  "placemarks": [
+    {
+      "name": "Liffey",
+      "description": "it's in Europe",
+      "_id": "1dbd2943-0b3d-4a21-8754-00dc091e3c16",
+      "categoryid": "3d2ca721-fed3-4145-ba72-ed3831483eca"
+    },
+    {
+      "name": "Yangtze",
+      "description": "it's in Asia",
+      "_id": "41ec1eb4-8b1e-4387-bab1-104ee7e60459",
+      "categoryid": "3d2ca721-fed3-4145-ba72-ed3831483eca"
+    },
+    {
+      "name": "Missisippi",
+      "description": "It's in North America",
+      "_id": "ae3e02f5-4806-4f71-b657-baf78999566f",
+      "categoryid": "3d2ca721-fed3-4145-ba72-ed3831483eca"
+    }
+  ],
+  "categories": [
+    {
+      "title": "River",
+      "_id": "3d2ca721-fed3-4145-ba72-ed3831483eca"
     }
   ]
 }

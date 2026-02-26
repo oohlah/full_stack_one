@@ -7,7 +7,7 @@ suite("Category Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init();
+    db.init("json");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);
@@ -25,7 +25,7 @@ suite("Category Model tests", () => {
   });
  
    test("create multiple placemarks", async () => {
-     const placemarks = await db.placemarkStore.getPlacemarkByCategoryId(bodyOfWater._id);
+     const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(bodyOfWater._id);
      assert.equal(testPlacemarks.length, placemarks.length);
     
     });
@@ -67,12 +67,12 @@ suite("Category Model tests", () => {
   });
 
    test("get placemark with categoryId - success", async () => {
-   const placemarks = await db.placemarkStore.getCategoryPlacemarks(bodyOfWater._id);
+   const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(bodyOfWater._id);
    assert.deepEqual(placemarks.length, testPlacemarks.length);
   });
 
   test("get placemark with categoryId - failure", async () => {
-   const placemarks = await db.placemarkStore.getCategoryPlacemarks("123");
+   const placemarks = await db.placemarkStore.getPlacemarksByCategoryId("123");
    assert.deepEqual(placemarks.length, 0);
   });
 

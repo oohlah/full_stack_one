@@ -7,7 +7,7 @@ export const placemarkJsonStore = {
     return db.data.placemarks;
   },
 
-  async addPlacemark(categoryId, track) {
+  async addPlacemark(categoryId, placemark) {
     await db.read();
     placemark._id = v4();
     placemark.categoryid = categoryId;
@@ -23,7 +23,9 @@ export const placemarkJsonStore = {
 
   async getPlacemarkById(id) {
     await db.read();
-    return db.data.placemarks.find((placemark) => placemark._id === id);
+    let p = db.data.placemarks.find((placemark) => placemark._id === id);
+    if(p === undefined){p = null};
+    return p;
   },
 
   async deletePlacemark(id) {
