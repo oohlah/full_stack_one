@@ -39,14 +39,23 @@ suite("Category Model tests", () => {
  
   });
 
-   test("delete a single placemark", async () => {
-    
+   test("delete a single placemark - success", async () => {
+    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
+    await db.placemarkStore.deletePlacemark(placemark._id);
+    const deletedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
+    assert.isNull(deletedPlacemark);
+ 
+  });
+
+  test("delete a single placemark - failure", async () => {
+   const deletedPlacemark = await db.placemarkStore.getPlacemarkById("123");
+    assert.isNull(deletedPlacemark);
  
   });
 
   test("get a placemark by Id - success", async () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
-   const returnedPlacemark = await db.placemarkStore.getPlacemarkById(liffey._id);
+   const returnedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
    assertSubset(liffey, returnedPlacemark); 
   });
 
