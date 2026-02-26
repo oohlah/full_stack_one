@@ -1,4 +1,4 @@
-import { Placemark } from "./track.js";
+import { Placemark } from "./placemark.js";
 
 export const placemarkMongoStore = {
   async getPlacemarksByCateogryId(id) {
