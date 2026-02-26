@@ -7,7 +7,7 @@ import { assertSubset } from "../test-utils.js";
 suite("Category Model tests", () => {
  
   setup(async () => {
-    db.init("json");
+    db.init("mongo");
      await db.userStore.deleteAll();
      await db.categoryStore.deleteAllCategories();
     for (let i = 0; i < testCategories.length; i += 1) {
@@ -18,7 +18,7 @@ suite("Category Model tests", () => {
 
   test("create a category", async () => {
   const newCategory = await db.categoryStore.addCategory(river);
-  assert.equal(newCategory, river);
+  assertSubset(river, newCategory);
   });
 
   test("get a category by Id - success", async () => {
@@ -41,10 +41,10 @@ suite("Category Model tests", () => {
   });
 
   test("delete category by Id - success", async () => {
-  const id = testCategories[0];
-  await db.categoryStore.deleteCategoryById(id);
-  const returnedCategories = await db.categoryStore.getAllCategories();
-  assert.equal(returnedCategories.length, testCategories.length)
+  const category = await db.categoryStore.addCategory(river);  
+  await db.categoryStore.deleteCategoryById(category._id);
+  const deletedCategory = await db.categoryStore.getCategoryById(category._id);
+  assert.isNull(deletedCategory);
   });
 
 
