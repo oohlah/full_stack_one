@@ -24,6 +24,11 @@ export const placemarkMemStore = {
     return p;
   },
 
+   async getCategoryPlacemarks(categoryId){
+    return placemarks.filter((placemark) =>placemark.categoryid === categoryId);
+    
+  },
+
    async deletePlacemark(id) { 
     const index = placemarks.findIndex((placemark) => placemark._id === id);
     if (index !== -1) placemarks.splice(index, 1);

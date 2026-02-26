@@ -39,6 +39,11 @@ suite("Category Model tests", () => {
  
   });
 
+   test("delete a single placemark", async () => {
+    
+ 
+  });
+
   test("get a placemark by Id - success", async () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
    const returnedPlacemark = await db.placemarkStore.getPlacemarkById(liffey._id);
@@ -50,6 +55,16 @@ suite("Category Model tests", () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
    const returnedPlacemark = await db.placemarkStore.getPlacemarkById("123");
    assert.isNull(returnedPlacemark);
+  });
+
+   test("get placemark with categoryId - success", async () => {
+   const placemarks = await db.placemarkStore.getCategoryPlacemarks(bodyOfWater._id);
+   assert.deepEqual(placemarks.length, testPlacemarks.length);
+  });
+
+  test("get placemark with categoryId - failure", async () => {
+   const placemarks = await db.placemarkStore.getCategoryPlacemarks("123");
+   assert.deepEqual(placemarks.length, 0);
   });
 
   });
