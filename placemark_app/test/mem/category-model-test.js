@@ -7,7 +7,7 @@ import { assertSubset } from "../test-utils.js";
 suite("Category Model tests", () => {
  
   setup(async () => {
-    db.init();
+    db.init("json");
      await db.userStore.deleteAll();
      await db.categoryStore.deleteAllCategories();
     for (let i = 0; i < testCategories.length; i += 1) {
