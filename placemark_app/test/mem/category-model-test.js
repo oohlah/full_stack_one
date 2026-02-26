@@ -1,8 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { assert } from "chai";
+import { EventEmitter } from "events";
 import { db } from "../../src/models/db.js";
 import { maggie, river, testCategories } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
+
+EventEmitter.setMaxListeners(25);
 
 suite("Category Model tests", () => {
  

@@ -1,13 +1,16 @@
 import { assert } from "chai";
+import { EventEmitter } from "events";
 import { db } from "../../src/models/db.js";
 import { testCategories, testPlacemarks, river, liffey, testUsers, maggie} from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
-suite("Category Model tests", () => {
+EventEmitter.setMaxListeners(25);
+
+suite("Placemark Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init("json");
+    db.init("mongo");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);
@@ -19,8 +22,9 @@ suite("Category Model tests", () => {
 
   test("create a placemark", async () => {
     const returnedPlacemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
-    assert.isNotNull(returnedPlacemark)
+    assert.isNotNull(returnedPlacemark._id)
     assertSubset(liffey, returnedPlacemark);
+    
    
   });
  
