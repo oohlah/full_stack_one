@@ -1,6 +1,6 @@
 import { assert } from "chai";
 import { db } from "../src/models/db.js";
-
+export const serviceUrl = "http://localhost:4000";
 
 export const maggie = {
     firstName: "Maggie",
