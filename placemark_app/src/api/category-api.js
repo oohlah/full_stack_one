@@ -23,13 +23,27 @@ export const categoryApi = {
         if (!category) {
           return Boom.notFound("No Category with this id");
         }
-        return user;
+        return category;
       } catch (err) {
         return Boom.serverUnavailable("No Category with this id");
       }
     },
   },
-
+deleteOne: {
+    auth: false,
+    handler: async function (request, h) {
+      try {
+        const category = await db.categoryStore.getCategoryById(request.params.id);
+        if (!category) {
+          return Boom.notFound("No Category with this id");
+        }
+        await db.categoryStore.deleteCategoryById(category._id);
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("No Playlist with this id");
+      }
+    },
+  },
   create: {
     auth: false,
     handler: async function (request, h) {
@@ -49,7 +63,7 @@ export const categoryApi = {
     auth: false,
     handler: async function (request, h) {
       try {
-        await db.categoryStore.deleteAll();
+        await db.categoryStore.deleteAllCategories();
         return h.response().code(204);
       } catch (err) {
         return Boom.serverUnavailable("Database Error");

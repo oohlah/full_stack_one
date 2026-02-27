@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import axios from "axios";
 
 import { serviceUrl } from "../fixtures.js";
@@ -26,7 +27,7 @@ placemarkUrl: serviceUrl,
   },
 
  async createCategory(category) {
-    const res = await axios.post(`${this.placemarkUrl}/api/category`, category);
+    const res = await axios.post(`${this.placemarkUrl}/api/categories`, category);
     return res.data;
   },
 
@@ -40,6 +41,11 @@ placemarkUrl: serviceUrl,
     return res.data;
   },
 
+  async deleteCategory(id) {
+    const res = await axios.delete(`${this.placemarkUrl}/api/categories/${id}`);
+    return res.data;
+  },
+  
   async deleteAllCategories() {
     const res = await axios.delete(`${this.placemarkUrl}/api/categories`);
     return res.data;
