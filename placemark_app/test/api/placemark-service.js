@@ -23,5 +23,25 @@ placemarkUrl: serviceUrl,
   async deleteAllUsers() {
     const res = await axios.delete(`${this.placemarkUrl}/api/users`);
     return res.data;
+  },
+
+ async createCategory(category) {
+    const res = await axios.post(`${this.placemarkUrl}/api/category`, category);
+    return res.data;
+  },
+
+  async getCategory(id) {
+    const res = await axios.get(`${this.placemarkUrl}/api/categories/${id}`);
+    return res.data;
+  },
+
+   async getAllCategories() {
+    const res = await axios.get(`${this.placemarkUrl}/api/categories`);
+    return res.data;
+  },
+
+  async deleteAllCategories() {
+    const res = await axios.delete(`${this.placemarkUrl}/api/categories`);
+    return res.data;
   }
 };
