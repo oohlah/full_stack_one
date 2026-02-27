@@ -9,5 +9,16 @@ suite("User API tests", () => {
   teardown(async () => {
   });
 
+    test("create category", async () => {
+  });
+
+  test("delete a category", async () => {
+  });
+
+  test("create multiple categories", async () => {
+  });
+
+  test("remove non-existant category", async () => {
+  });
 
   });
