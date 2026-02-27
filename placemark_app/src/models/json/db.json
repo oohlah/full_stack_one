@@ -1,5 +1,27 @@
 {
-  "users": [],
+  "users": [
+    {
+      "firstName": "Homer",
+      "lastName": "Simpson",
+      "email": "homer@simpson.com",
+      "password": "secret",
+      "_id": "9c59fd6d-983d-4796-b54c-049d0af76890"
+    },
+    {
+      "firstName": "Marge",
+      "lastName": "Simpson",
+      "email": "marge@simpson.com",
+      "password": "secret",
+      "_id": "ac588f0f-df15-4529-8afc-1b92cc8bf452"
+    },
+    {
+      "firstName": "Bart",
+      "lastName": "Simpson",
+      "email": "bart@simpson.com",
+      "password": "secret",
+      "_id": "c3b2cf76-11ad-48bf-a55b-3c0b11417da1"
+    }
+  ],
   "placemarks": [
     {
       "name": "Liffey",
