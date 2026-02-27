@@ -7,9 +7,9 @@ suite("User API tests", () => {
   });
 
   test("create a user", async () => {
-    const newUser = await playtimeService.createUser(maggie);
+    const newUser = await placemarkService.createUser(maggie);
     assertSubset(maggie, newUser);
     assert.isDefined(newUser._id);
   });
-  
+
 });
