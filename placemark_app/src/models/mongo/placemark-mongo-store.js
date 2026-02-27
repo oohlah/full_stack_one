@@ -1,3 +1,4 @@
+import Mongoose from "mongoose";
 import { Placemark } from "./placemark.js";
 
 export const placemarkMongoStore = {
@@ -11,17 +12,23 @@ export const placemarkMongoStore = {
     const newPlacemark = new Placemark(placemark);
     const placemarkObj = await newPlacemark.save();
     return this.getPlacemarkById(placemarkObj._id);
+  
 
   },
 
     async getPlacemarkById(id){
-    const placemarks = await Placemark.find({ categoryid: id }).lean();
+    if (Mongoose.isValidObjectId(id)) {
+    const placemarks = await Placemark.find({ _id: id }).lean();
     return placemarks;
+  }
+    return null;
   },
 
   async getPlacemarksByCategoryId(id) {
+    if (Mongoose.isValidObjectId(id)) {
     const placemarks = await Placemark.find({ categoryid: id }).lean();
     return placemarks;
+    }return [];
   },
 
     async deletePlacemark(id) { 

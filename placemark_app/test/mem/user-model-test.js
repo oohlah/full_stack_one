@@ -7,7 +7,6 @@ import { maggie, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 
 
-
 EventEmitter.setMaxListeners(25);
 
 suite("User Model tests", () => {

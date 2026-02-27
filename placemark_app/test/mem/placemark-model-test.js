@@ -23,7 +23,7 @@ suite("Placemark Model tests", () => {
   test("create a placemark", async () => {
     const returnedPlacemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
     assert.isNotNull(returnedPlacemark._id)
-    assertSubset(liffey, returnedPlacemark);
+    assertSubset(returnedPlacemark, liffey);
     
    
   });
@@ -72,12 +72,12 @@ suite("Placemark Model tests", () => {
 
    test("get placemark with categoryId - success", async () => {
    const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(bodyOfWater._id);
-   assert.deepEqual(placemarks.length, testPlacemarks.length);
+   assert.strictEqual(placemarks.length, testPlacemarks.length);
   });
 
   test("get placemark with categoryId - failure", async () => {
    const placemarks = await db.placemarkStore.getPlacemarksByCategoryId("123");
-   assert.deepEqual(placemarks.length, 0);
+   assert.strictEqual(placemarks.length, 0);
   });
 
   });
