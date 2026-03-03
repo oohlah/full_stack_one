@@ -1,6 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { IdSpec,CategorySpec, CategorySpecPlus, CategoryArray } from "../models/joi-schema.js";
+import { validationError } from "./logger.js";
 
 export const categoryApi = {
   find: {
@@ -13,6 +15,12 @@ export const categoryApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+     description: "Find all categoryApi",
+     notes: "Return all categories",
+     // doesn't validate anything
+     // return an array
+     response: {schema: CategoryArray, failAction: validationError},
   },
 
   findOne: {
@@ -28,6 +36,13 @@ export const categoryApi = {
         return Boom.serverUnavailable("No Category with this id");
       }
     },
+    tags: ["api"],
+     description: "Get Category with id",
+     notes: "Return a specific category",
+     // validate a parameter - id
+     validate: { params: { id: IdSpec }, failAction: validationError },
+     // returns one category
+     response: { schema: CategorySpecPlus, failAction: validationError},
   },
 deleteOne: {
     auth: false,
@@ -43,8 +58,15 @@ deleteOne: {
         return Boom.serverUnavailable("No Playlist with this id");
       }
     },
+     tags: ["api"],
+     description: "Delete one category by id",
+     notes: "delete a specific category",
+     // validate a parameter - id
+     validate: { params: { id: IdSpec }, failAction: validationError },
+      // doesn't return anything
   },
-  create: {
+
+    create: {
     auth: false,
     handler: async function (request, h) {
       try {
@@ -57,6 +79,15 @@ deleteOne: {
         return Boom.serverUnavailable("Database Error");
       }
     },
+
+    tags: ["api"],
+     description: "create a category",
+     notes: "creates a category api",
+     // validates a payload with no additional properties
+    validate: { payload: CategorySpec, failAction: validationError},
+    // returns an item with additional properties,
+    response: { schema: CategorySpecPlus, failAction: validationError },
+
   },
 
   deleteAll: {
@@ -69,5 +100,9 @@ deleteOne: {
         return Boom.serverUnavailable("Database Error");
       }
     },
+    tags: ["api"],
+     description: "Delete all categories",
+     notes: "deletes all categories",
+     // validates nothing, returns nothing
   },
 };
