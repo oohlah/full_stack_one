@@ -10,11 +10,11 @@ suite(" Category Api tests", () => {
     await placemarkService.deleteAllCategories();
     await placemarkService.deleteAllUsers();
     user = await placemarkService.createUser(maggie);
-    maggie.userid = user._id;
+    
   });
   teardown(async () => {
   });
-
+ 
     test("create category", async () => {
     const returnedCategory = await placemarkService.createCategory(river);
     assert.isNotNull(returnedCategory);

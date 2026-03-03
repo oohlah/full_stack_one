@@ -5,20 +5,25 @@ import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
 
 suite("User API tests", () => {
+    // created localMaggie for testing to prevent interference 
+    // with modifying fixtures for other tests 
+    let localMaggie = null;
+
   setup(async () => {
      db.init();
    await placemarkService.deleteAllUsers();
        for (let i = 0; i < testUsers.length; i += 1) {
          // eslint-disable-next-line no-await-in-loop
          testUsers[i] = await placemarkService.createUser(testUsers[i]);
+         localMaggie = maggie;
        }
   });
   teardown(async () => {
   });
 
   test("create a user", async () => {
-    const newUser = await placemarkService.createUser(maggie);
-    assertSubset(maggie, newUser);
+    const newUser = await placemarkService.createUser(localMaggie);
+    assertSubset(localMaggie, newUser);
     assert.isDefined(newUser._id);
   });
 
