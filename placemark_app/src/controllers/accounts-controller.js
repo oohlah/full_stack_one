@@ -1,5 +1,5 @@
 import { db } from "../models/db.js";
-import { UserSpec, UserCredentials } from "../models/joi-schema.js";
+import { UserSpec, UserCredentialsSpec } from "../models/joi-schema.js";
 
 export const accountsController = {
   index: {
@@ -39,7 +39,7 @@ export const accountsController = {
   login: {
     auth: false,
     validate: {
-      payload: UserCredentials,
+      payload: UserCredentialsSpec,
       options: {abortEarly: false},
       failAction: function (request, h, error) {
         return h.view("login-view", { title: "Login error", errors: error.details }).takeover().code(400);
