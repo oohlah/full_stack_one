@@ -50,8 +50,8 @@ placemarkUrl: serviceUrl,
     const res = await axios.delete(`${this.placemarkUrl}/api/categories`);
     return res.data;
   },
-  async createPlacemark(placemark) {
-    const res = await axios.post(`${this.placemarkUrl}/api/placemarks`, placemark);
+  async createPlacemark(id, placemark) {
+    const res = await axios.post(`${this.placemarkUrl}/api/categories/${id}/placemarks`, placemark);
     return res.data;
   },
 
