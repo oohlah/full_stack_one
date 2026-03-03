@@ -22,7 +22,8 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
     "start": "node src/server.js",
-    "lint": "./node_modules/.bin/eslint . --ext .js"
+    "lint": "./node_modules/.bin/eslint . --ext .js",
+     "dev": "./node_modules/.bin/nodemon  src/server.js"
   },
   "devDependencies": {
     "axios": "^1.13.5",
