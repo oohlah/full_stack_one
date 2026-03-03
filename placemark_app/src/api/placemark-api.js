@@ -5,12 +5,27 @@ export const placemarkApi = {
   find: {
     auth: false,
     handler: async function (request, h) {
+        try {
+        const placemarks = await db.placemarkStore.getAllPlacemarks();
+        return placemarks;
+      } catch (err) {
+        return Boom.serverUnavailable("Database Error:", err);
+      }
     },
   },
 
   findOne: {
     auth: false,
     async handler(request) {
+         try {
+        const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+        if (!placemark) {
+          return Boom.notFound("No placemark with this id");
+        }
+        return placemark;
+      } catch (err) {
+        return Boom.serverUnavailable("No placemark with this id:", err);
+      }
     },
   },
 
