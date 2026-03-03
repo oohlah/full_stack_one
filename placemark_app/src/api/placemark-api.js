@@ -31,14 +31,14 @@ export const placemarkApi = {
         }
         return placemark;
       } catch (err) {
-        return Boom.serverUnavailable("No placemark with this id:", err);
+        return Boom.serverUnavailable("No placemark with this id");
       }
     },
      tags: ["api"],
      description: "Find one placemarkApi with id",
      notes: "Return a specific placemark",
      //validates a payload
-     validate: { payload: PlacemarkSpec, failAction: validationError },
+     validate: { params: { id: IdSpec }, failAction: validationError },
      //returns one placemark
      response: { schema: PlacemarkSpecPlus, failAction: validationError},
   },
