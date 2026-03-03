@@ -14,6 +14,11 @@ export const placemarkApi = {
         return Boom.serverUnavailable("Database Error:", err);
       }
     },
+     tags: ["api"],
+     description: "Find all placemarksApi",
+     notes: "Return all placemarks",
+     //no validation, returns an array of placemarks
+     response: {schema: PlacemarkArray, failAction: validationError},
   },
 
   findOne: {
@@ -29,6 +34,13 @@ export const placemarkApi = {
         return Boom.serverUnavailable("No placemark with this id:", err);
       }
     },
+     tags: ["api"],
+     description: "Find one placemarkApi with id",
+     notes: "Return a specific placemark",
+     //validates a payload
+     validate: { payload: PlacemarkSpec, failAction: validationError },
+     //returns one placemark
+     response: { schema: PlacemarkSpecPlus, failAction: validationError},
   },
 
   create: {
@@ -44,6 +56,13 @@ export const placemarkApi = {
         return Boom.serverUnavailable("Database Error:", err);
       }
     },
+     tags: ["api"],
+     description: "Create a placemarkApi",
+     notes: "Creates a placemark",
+     // validates a payload object with no additional properties
+     validate: { payload: PlacemarkSpec, failAction: validationError},
+     //returns an object with additional properties
+     response: { schema: PlacemarkSpecPlus, failAction: validationError },
   },
 
   deleteAll: {
@@ -56,6 +75,10 @@ export const placemarkApi = {
         return Boom.serverUnavailable("Database Error:", err);
       }
     },
+     tags: ["api"],
+     description: "Delete all placemarksApi",
+     notes: "Delete all placemarks",
+     // validates nothing, returns nothing
   },
 
   deleteOne: {
@@ -72,5 +95,10 @@ export const placemarkApi = {
         return Boom.serverUnavailable("No Placemark with this id:", err);
       }
     },
+     tags: ["api"],
+     description: "Delete placemarkApi by id",
+     notes: "Deletes a specific placemark",
+     // validates a parameter, returns nothing
+     validate: { params: { id: IdSpec }, failAction: validationError },
     },
 };
