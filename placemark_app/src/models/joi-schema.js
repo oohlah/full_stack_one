@@ -30,10 +30,20 @@ export const UserSpecPlus = UserSpec.keys({
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
-export const CategorySpec = {
+export const CategorySpec =Joi.object()
+.keys({
     title: Joi.string().required(),
-};
+    _id: IdSpec,
+  __v: Joi.number(),
+})
+.label("CategorySpec");
 
+export const CategorySpecPlus = CategorySpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("CategorySpecPlus");
+
+export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
 
 export const placemarkSpec = {
     name: Joi.string().required(),
