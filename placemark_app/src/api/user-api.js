@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray } from "../models/joi-schema.js";
+import { UserArray, IdSpec, UserSpecPlus, UserSpec } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 
 export const userApi = {
@@ -18,6 +18,7 @@ export const userApi = {
     tags: ["api"],
     description: "Get all userApi",
     notes: "Returns details of all userApi",
+    // return array
     response: { schema: UserArray, failAction: validationError},
   },
 
@@ -37,6 +38,10 @@ export const userApi = {
      tags: ["api"],
      description: "Get userApi with id",
      notes: "Returns user details",
+     // validate incoming id
+     validate: { params: { id: IdSpec }, failAction: validationError },
+     //return one
+     response: { schema: UserSpecPlus, failAction: validationError},
   },
 
   create: {
@@ -55,6 +60,10 @@ export const userApi = {
      tags: ["api"],
      description: "Create a user",
      notes: "Creates a user",
+     // excpect incoming data not to contain id etc.
+     validate: { payload: UserSpec, failAction: validationError},
+     // excpect response to include additional properties
+     response: { schema: UserSpecPlus, failAction: validationError },
   },
 
   deleteAll: {
@@ -68,7 +77,8 @@ export const userApi = {
       }
     },
      tags: ["api"],
-     description: "Delete a user",
-     notes: "Deletes a user",
+     description: "Delete all users",
+     notes: "Deletes all users",
+     //nothing being validated, nothing being returned
   },
 };
