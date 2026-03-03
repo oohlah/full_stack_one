@@ -1,5 +1,7 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { IdSpec, PlacemarkSpec, PlacemarkSpecPlus, PlacemarkArray} from "../models/joi-schema.js";
+import { validationError } from "./logger.js";
 
 export const placemarkApi = {
   find: {
