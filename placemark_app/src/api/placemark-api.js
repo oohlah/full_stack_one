@@ -59,6 +59,16 @@ export const placemarkApi = {
   deleteOne: {
     auth: false,
     handler: async function (request, h) {
+        try {
+        const placemark = await db.placemarkStore.getPlacemarkById(request.params.id);
+        if (!placemark) {
+          return Boom.notFound("No Placemark with this id");
+        }
+        await db.placemarkStore.deletePlacemark(placemark._id);
+        return h.response().code(204);
+      } catch (err) {
+        return Boom.serverUnavailable("No Placemark with this id:", err);
+      }
     },
-  },
+    },
 };
