@@ -4,10 +4,18 @@ import { placemarkService } from "./placemark-service.js";
 import { maggie, river, testCategories, testPlacemarks, liffey } from "../fixtures.js";
 
 suite("Placemark API tests", () => {
-  let user = null;
-  let museaum = null;
+  let localMaggie = null;
+  let bodyOfWater = null;
 
   setup(async () => {
+    await placemarkService.deleteAllCategories();
+    await placemarkService.deleteAllPlacemarks();
+    await placemarkService.deleteAllUsers();
+    localMaggie = await placemarkService.createUser(maggie);
+    river.userid= localMaggie._id;
+    bodyOfWater = await placemarkService.addCategory(river);
+    
+
   });
 
   teardown(async () => {});
