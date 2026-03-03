@@ -17,6 +17,9 @@ export const webRoutes = [
 
    { method: "GET", path: "/category/{id}", config: categoryController.index},
    { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
-   { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark}
+   { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark},
+
+   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } }
+
 
 ];
