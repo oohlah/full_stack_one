@@ -3,6 +3,7 @@ import Hapi from "@hapi/hapi";
 import Vision from "@hapi/vision";
 import Inert from "@hapi/inert";
 import Cookie from "@hapi/cookie";
+import HapiSwagger from "hapi-swagger";
 import dotenv from "dotenv";
 import Handlebars from "handlebars";
 import Joi from "joi";
@@ -22,13 +23,30 @@ if (result.error) {
   process.exit(1);
 }
 
+const swaggerOptions = {
+  info: {
+    title: "Placemark API",
+    version: "0.1",
+  },
+};
+
 async function init() {
   const server = Hapi.server({
     port: 4000,
     host: "localhost",
   });
-  await server.register(Vision);
+  
   await server.register(Cookie);
+
+    await server.register([
+    Inert,
+    Vision,
+    {
+      plugin: HapiSwagger,
+      options: swaggerOptions,
+    },
+  ]);
+  
   server.validator(Joi);
   server.views({
     engines: {
