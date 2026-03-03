@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
+import { UserArray } from "../models/joi-schema.js";
 
 export const userApi = {
   find: {
@@ -16,6 +17,7 @@ export const userApi = {
     tags: ["api"],
     description: "Get all userApi",
     notes: "Returns details of all userApi",
+    response: { schema: UserArray }
   },
 
   findOne: {
