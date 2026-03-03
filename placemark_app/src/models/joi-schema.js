@@ -57,4 +57,4 @@ export const PlacemarkSpecPlus = PlacemarkSpec
   __v: Joi.number(),
 }).label("PlacemarkSpecPlus");
 
-export const PlacemarkArray = Joi.array.items(PlacemarkSpecPlus).label("PlacemarkArray");
+export const PlacemarkArray = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray");
