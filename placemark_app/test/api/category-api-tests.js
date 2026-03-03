@@ -22,6 +22,15 @@ suite(" Category Api tests", () => {
   });
 
   test("delete a category", async () => {
+    const category = await placemarkService.createCategory(river);
+    const response = await placemarkService.deleteCategory(category._id);
+    assert.equal(response.status, 204);
+    try {
+      const returnedCategory = await placemarkService.getCategory(category.id);
+      assert.fail("Should not return a response");
+    } catch (error) {
+      assert(error.response.data.message.startsWith("No Category with this id"), "Incorrect Response Message");
+    }
   });
 
   test("create multiple categories", async () => {
