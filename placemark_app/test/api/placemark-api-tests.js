@@ -26,6 +26,17 @@ suite("Placemark API tests", () => {
   });
 
   test("create Multiple placemarks", async () => {
+     for (let i = 0; i < testPlacemarks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await placemarkService.createPlacemark(bodyOfWater._id, testPlacemarks[i]);
+    }
+    const returnedPlacemarks = await placemarkService.getAllPlacemarks();
+    assert.equal(returnedPlacemarks.length, testPlacemarks.length);
+    for (let i = 0; i < returnedPlacemarks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      const placemark = await placemarkService.getPlacemark(returnedPlacemarks[i]._id);
+      assertSubset(placemark, returnedPlacemarks[i]);
+    }
   });
 
   test("Delete placemark", async () => {
