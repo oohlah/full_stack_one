@@ -13,7 +13,7 @@ suite("Placemark API tests", () => {
     await placemarkService.deleteAllUsers();
     localMaggie = await placemarkService.createUser(maggie);
     river.userid= localMaggie._id;
-    bodyOfWater = await placemarkService.addCategory(river);
+    bodyOfWater = await placemarkService.createCategory(river);
     
 
   });
@@ -21,6 +21,8 @@ suite("Placemark API tests", () => {
   teardown(async () => {});
 
   test("create placemark", async () => {
+    const returnedPlacemark = await placemarkService.createPlacemark(bodyOfWater._id, liffey);
+    assertSubset(returnedPlacemark, liffey);
   });
 
   test("create Multiple placemarks", async () => {
