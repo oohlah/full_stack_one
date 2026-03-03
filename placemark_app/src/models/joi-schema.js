@@ -32,7 +32,7 @@ export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
 export const CategorySpec =Joi.object()
 .keys({
-    title: Joi.string().required(),
+    title: Joi.string().example("rivers").required(),
     _id: IdSpec,
   __v: Joi.number(),
 })
@@ -45,7 +45,16 @@ export const CategorySpecPlus = CategorySpec.keys({
 
 export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
 
-export const placemarkSpec = {
-    name: Joi.string().required(),
+export const PlacemarkSpec = Joi.object()
+.keys({
+    name: Joi.string().example("the liffey").required(),
     description: Joi.string().required(),
-};
+}).label("PlacemarkSpec");
+
+export const PlacemarkSpecPlus = PlacemarkSpec
+.keys({ 
+    _id: IdSpec,
+  __v: Joi.number(),
+}).label("PlacemarkSpecPlus");
+
+export const placemarkArray = Joi.array.items(PlacemarkSpecPlus).label("PlacemarkArray");
