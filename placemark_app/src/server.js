@@ -1,5 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import Hapi from "@hapi/hapi";
 import Vision from "@hapi/vision";
+import Inert from "@hapi/inert";
 import Cookie from "@hapi/cookie";
 import dotenv from "dotenv";
 import Handlebars from "handlebars";
@@ -55,6 +57,7 @@ async function init() {
   server.route(webRoutes);
   server.route(apiRoutes);
   await server.start();
+  await server.register(Inert);
   console.log("Server running on %s", server.info.uri);
 }
 
