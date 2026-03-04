@@ -42,8 +42,8 @@ placemarkUrl: serviceUrl,
   },
 
   async deleteCategory(id) {
-    const res = await axios.delete(`${this.placemarkUrl}/api/categories/${id}`);
-    return res.data;
+    const response = await axios.delete(`${this.placemarkUrl}/api/categories/${id}`);
+    return response;
   },
   
   async deleteAllCategories() {
@@ -73,5 +73,15 @@ placemarkUrl: serviceUrl,
   async deleteAllPlacemarks() {
     const res = await axios.delete(`${this.placemarkUrl}/api/placemarks`);
     return res.data;
+  },
+
+   async authenticate(user) {
+    const response = await axios.post(`${this.playtimeUrl}/api/users/authenticate`, user);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.token;
+    return response.data;
+  },
+
+  async clearAuth() {
+    axios.defaults.headers.common["Authorization"] = "";
   }
 };
