@@ -71,6 +71,11 @@ async function init() {
     redirectTo: "/",
     validate: accountsController.validate,
   });
+   server.auth.strategy("jwt", "jwt", {
+    key: process.env.cookie_password,
+    validate: validate,
+    verifyOptions: { algorithms: ["HS256"] },
+  });
   server.auth.default("session");
 
   db.init("mongo");
