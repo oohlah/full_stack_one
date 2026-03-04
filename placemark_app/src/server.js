@@ -7,12 +7,14 @@ import HapiSwagger from "hapi-swagger";
 import dotenv from "dotenv";
 import Handlebars from "handlebars";
 import Joi from "joi";
+import jwt from "hapi-auth-jwt2";
 import path from "path";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 import { apiRoutes } from "./api-routes.js";
 import { db } from "./models/db.js";
 import { accountsController} from "./controllers/accounts-controller.js";
+import { validate } from "./api/jwt-utils.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -36,8 +38,8 @@ async function init() {
     host: "localhost",
   });
   
-  await server.register(Cookie);
-
+    await server.register(Cookie);
+    await server.register(jwt);
     await server.register([
     Inert,
     Vision,
@@ -46,7 +48,7 @@ async function init() {
       options: swaggerOptions,
     },
   ]);
-  
+
   server.validator(Joi);
   server.views({
     engines: {
