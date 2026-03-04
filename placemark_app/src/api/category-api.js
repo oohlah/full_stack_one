@@ -6,7 +6,9 @@ import { validationError } from "./logger.js";
 
 export const categoryApi = {
   find: {
-    strategy: "jwt",
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const categories = await db.categoryStore.getAllCategories();
@@ -24,7 +26,9 @@ export const categoryApi = {
   },
 
   findOne: {
-    strategy: "jwt",
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const category = await db.categoryStore.getCategoryById(request.params.id);
@@ -45,7 +49,9 @@ export const categoryApi = {
      response: { schema: CategorySpecPlus, failAction: validationError},
   },
 deleteOne: {
-    strategy: "jwt",
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const category = await db.categoryStore.getCategoryById(request.params.id);
@@ -67,7 +73,9 @@ deleteOne: {
   },
 
     create: {
-    strategy: "jwt",
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         const category = await db.categoryStore.addCategory(request.payload);
@@ -91,7 +99,9 @@ deleteOne: {
   },
 
   deleteAll: {
-    strategy: "jwt",
+    auth: {
+      strategy: "jwt",
+    },
     handler: async function (request, h) {
       try {
         await db.categoryStore.deleteAllCategories();
