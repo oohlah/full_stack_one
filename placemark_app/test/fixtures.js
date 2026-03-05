@@ -11,6 +11,11 @@ export const maggie = {
 
 };
 
+export const maggieCredentials = {
+  email: "maggie@simpson.com",
+  password: "secret"
+};
+
 export const testUsers = [
   {
     firstName: "Homer",
