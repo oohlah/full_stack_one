@@ -61,7 +61,7 @@ deleteOne: {
         await db.categoryStore.deleteCategoryById(category._id);
         return h.response().code(204);
       } catch (err) {
-        return Boom.serverUnavailable("No Playlist with this id");
+        return Boom.serverUnavailable("No Category with this id");
       }
     },
      tags: ["api"],
