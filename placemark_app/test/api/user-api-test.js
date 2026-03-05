@@ -1,31 +1,40 @@
 import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
-import { maggie, testUsers } from "../fixtures.js";
+import { maggie, maggieCredentials, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
 import { db } from "../../src/models/db.js";
 
-suite("User API tests", () => {
-    // created localMaggie for testing to prevent interference 
-    // with modifying fixtures for other tests 
-    let localMaggie = null;
+const users = new Array(testUsers.length);
 
+suite("User API tests", () => {
+ 
   setup(async () => {
      db.init();
-   await placemarkService.deleteAllUsers();
+      placemarkService.clearAuth();
+      await placemarkService.createUser(maggie);
+      await placemarkService.authenticate(maggieCredentials);
+      await placemarkService.deleteAllUsers();
        for (let i = 0; i < testUsers.length; i += 1) {
          // eslint-disable-next-line no-await-in-loop
-         testUsers[i] = await placemarkService.createUser(testUsers[i]);
-         localMaggie = maggie;
+         users[i] = await placemarkService.createUser(testUsers[i]);
        }
+         await placemarkService.createUser(maggie);
+         await placemarkService.authenticate(maggieCredentials);
+       
   });
   teardown(async () => {
   });
 
   test("create a user", async () => {
-    const newUser = await placemarkService.createUser(localMaggie);
-    assertSubset(localMaggie, newUser);
-    assert.isDefined(newUser._id);
+    const newUser = await placemarkService.createUser(maggie);
+    assertSubset(maggie, newUser);
+    assert.isDefined(newUser._id); // checks that id is not undefined
   });
+
+    test("get a user", async () => {
+    const returnedUser = await placemarkService.getUser(users[0]._id);
+    assertSubset(users[0], returnedUser);
+   });
 
     test("get a user - bad id", async () => {
     try {
@@ -36,16 +45,14 @@ suite("User API tests", () => {
       assert.equal(error.response.data.statusCode, 404);
     }
   });
-      test("get a user", async () => {
-    const returnedUser = await placemarkService.getUser(testUsers[0]._id);
-    assertSubset(testUsers[0], returnedUser);
-    
-  });
-
+   
     test("get a user - deleted user", async () => {
-    await placemarkService.deleteAllUsers();
+     await placemarkService.deleteAllUsers();
+     await placemarkService.createUser(maggie);
+     await placemarkService.authenticate(maggieCredentials); // auth email and password only
     try {
-      const returnedUser = await placemarkService.getUser(testUsers[0]._id);
+        // users returned from database
+      const returnedUser = await placemarkService.getUser(users[0]._id);
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
@@ -55,9 +62,13 @@ suite("User API tests", () => {
 
    test("delete all userApi", async () => {
     let returnedUsers = await placemarkService.getAllUsers();
-    assert.equal(returnedUsers.length, 3);
+    assert.equal(returnedUsers.length, 4);
     await placemarkService.deleteAllUsers();
+    // create maggie and authenticate so that jwt is valid again
+    await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     returnedUsers = await placemarkService.getAllUsers();
-    assert.equal(returnedUsers.length, 0);
+    // other 3 users are deleted - only one authenticated users left
+    assert.equal(returnedUsers.length, 1);
   });
 });
