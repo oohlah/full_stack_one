@@ -28,21 +28,6 @@ export const UserSpecPlus = UserSpec.keys({
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
-export const CategorySpec =Joi.object()
-.keys({
-    title: Joi.string().example("rivers").required(),
-    _id: IdSpec,
-  __v: Joi.number(),
-})
-.label("CategorySpec");
-
-export const CategorySpecPlus = CategorySpec.keys({
-  _id: IdSpec,
-  __v: Joi.number(),
-}).label("CategorySpecPlus");
-
-export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
-
 export const PlacemarkSpec = Joi.object()
 .keys({
     name: Joi.string().example("the liffey").required(),
@@ -55,4 +40,23 @@ export const PlacemarkSpecPlus = PlacemarkSpec
   __v: Joi.number(),
 }).label("PlacemarkSpecPlus");
 
-export const PlacemarkArray = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray");
+export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray");
+
+export const CategorySpec =Joi.object()
+.keys({
+    title: Joi.string().example("rivers").required(),
+    _id: IdSpec,
+    userid: IdSpec,
+    placemarks: PlacemarkArraySpec,
+  __v: Joi.number(),
+})
+.label("CategorySpec");
+
+
+export const CategorySpecPlus = CategorySpec.keys({
+  _id: IdSpec,
+  __v: Joi.number(),
+}).label("CategorySpecPlus");
+
+export const CategoryArray = Joi.array().items(CategorySpecPlus).label("CategoryArray");
+
