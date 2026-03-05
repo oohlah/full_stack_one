@@ -18,8 +18,8 @@ export const placemarkMongoStore = {
 
     async getPlacemarkById(id){
     if (Mongoose.isValidObjectId(id)) {
-    const placemarks = await Placemark.find({ _id: id }).lean();
-    return placemarks;
+    const placemark = await Placemark.findOne({ _id: id }).lean();
+    return placemark;
   }
     return null;
   },
