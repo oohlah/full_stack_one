@@ -1,26 +1,28 @@
 import { assert } from "chai";
-import { playtimeService } from "./playtime-service.js";
+import { placemarkService } from "./placemark-service.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
-import { maggie } from "../fixtures.js";
+import { maggie, maggieCredentials } from "../fixtures.js";
 
 suite("Authentication API tests", async () => {
   setup(async () => {
-    playtimeService.clearAuth();
-    await playtimeService.createUser(maggie);
-    await playtimeService.authenticate(maggie);
-    await playtimeService.deleteAllUsers();
+    placemarkService.clearAuth();
+    await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
+    await placemarkService.deleteAllUsers();
+     
+  
   });
 
   test("authenticate", async () => {
-    const returnedUser = await playtimeService.createUser(maggie);
-    const response = await playtimeService.authenticate(maggie);
+    const returnedUser = await placemarkService.createUser(maggie);
+    const response = await placemarkService.authenticate(maggieCredentials);
     assert(response.success);
     assert.isDefined(response.token);
   });
 
   test("verify Token", async () => {
-    const returnedUser = await playtimeService.createUser(maggie);
-    const response = await playtimeService.authenticate(maggie);
+    const returnedUser = await placemarkService.createUser(maggie);
+    const response = await placemarkService.authenticate(maggieCredentials);
 
     const userInfo = decodeToken(response.token);
     assert.equal(userInfo.email, returnedUser.email);
@@ -28,9 +30,9 @@ suite("Authentication API tests", async () => {
   });
 
     test("check Unauthorized", async () => {
-    playtimeService.clearAuth();
+    placemarkService.clearAuth();
     try {
-      await playtimeService.deleteAllUsers();
+      await placemarkService.deleteAllUsers();
       assert.fail("Route not protected");
     } catch (error) {
       assert.equal(error.response.data.statusCode, 401);
