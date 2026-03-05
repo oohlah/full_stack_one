@@ -45,7 +45,6 @@ suite("Category Model tests", () => {
 
   test("delete category by Id - success", async () => {
   const category = await db.categoryStore.addCategory(river);  
-  console.log(category);
   await db.categoryStore.deleteCategoryById(category._id);
   const deletedCategory = await db.categoryStore.getCategoryById(category._id);
   assert.isNull(deletedCategory);
