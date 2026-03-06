@@ -1,20 +1,25 @@
 import { assert } from "chai";
 import { assertSubset } from "../test-utils.js";
 import { placemarkService } from "./placemark-service.js";
-import { maggie, river, testCategories, testPlacemarks, liffey } from "../fixtures.js";
+import { maggie, maggieCredentials, river, testCategories, testPlacemarks, liffey } from "../fixtures.js";
 
 suite("Placemark API tests", () => {
-  let localMaggie = null;
+  let user = null;
   let bodyOfWater = null;
 
   setup(async () => {
+    placemarkService.clearAuth();
+    await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
     await placemarkService.deleteAllCategories();
     await placemarkService.deleteAllPlacemarks();
     await placemarkService.deleteAllUsers();
-    localMaggie = await placemarkService.createUser(maggie);
-    river.userid= localMaggie._id;
+    user = await placemarkService.createUser(maggie);
+    await placemarkService.authenticate(maggieCredentials);
+    river.userid= user._id;
     bodyOfWater = await placemarkService.createCategory(river);
-    
+    liffey.categoryid= bodyOfWater._id;
+   
 
   });
 
@@ -22,7 +27,8 @@ suite("Placemark API tests", () => {
 
   test("create placemark", async () => {
     const returnedPlacemark = await placemarkService.createPlacemark(bodyOfWater._id, liffey);
-    assertSubset(returnedPlacemark, liffey);
+    liffey._id = returnedPlacemark._id; // liffey fixture missing _id added
+    assertSubset(liffey, returnedPlacemark);
   });
 
   test("create Multiple placemarks", async () => {
@@ -40,8 +46,33 @@ suite("Placemark API tests", () => {
   });
 
   test("Delete placemark", async () => {
+     for (let i = 0; i < testPlacemarks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await placemarkService.createPlacemark(bodyOfWater._id, testPlacemarks[i]);
+    }
+    let returnedPlacemarks = await placemarkService.getAllPlacemarks();
+    assert.equal(testPlacemarks.length, returnedPlacemarks.length);
+
+    
+    for (let i = 0; i < returnedPlacemarks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await placemarkService.deletePlacemark(returnedPlacemarks[i]._id);
+      
+    }
+    returnedPlacemarks = await placemarkService.getAllPlacemarks();
+    assert.equal(returnedPlacemarks.length, 0);
+    
   });
 
   test("test denormalised category", async () => {
-  });
+      for (let i = 0; i < testPlacemarks.length; i += 1) {
+      // eslint-disable-next-line no-await-in-loop
+      await placemarkService.createPlacemark(bodyOfWater._id, testPlacemarks[i]);
+    }
+    const returnedCategory = await placemarkService.getCategory(bodyOfWater._id);
+    assert.equal(returnedCategory.placemarks.length, testPlacemarks.length);
+    for (let i = 0; i < testPlacemarks.length; i += 1) {
+      assertSubset(testPlacemarks[i], returnedCategory.placemarks[i]);
+    }
+    });
 });

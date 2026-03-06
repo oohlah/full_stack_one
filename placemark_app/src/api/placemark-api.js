@@ -1,6 +1,6 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { IdSpec, PlacemarkSpec, PlacemarkSpecPlus, PlacemarkArray} from "../models/joi-schema.js";
+import { IdSpec, PlacemarkSpec, PlacemarkSpecPlus, PlacemarkArraySpec} from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 
 export const placemarkApi = {
@@ -19,8 +19,8 @@ export const placemarkApi = {
      tags: ["api"],
      description: "Find all placemarksApi",
      notes: "Return all placemarks",
-     //no validation, returns an array of placemarks
-     response: {schema: PlacemarkArray, failAction: validationError},
+     // no validation, returns an array of placemarks
+     response: {schema: PlacemarkArraySpec, failAction: validationError},
   },
 
   findOne: {
@@ -41,9 +41,9 @@ export const placemarkApi = {
      tags: ["api"],
      description: "Find one placemarkApi with id",
      notes: "Return a specific placemark",
-     //validates a payload
+     // validates a payload
      validate: { params: { id: IdSpec }, failAction: validationError },
-     //returns one placemark
+     // returns one placemark
      response: { schema: PlacemarkSpecPlus, failAction: validationError},
   },
 
@@ -67,7 +67,7 @@ export const placemarkApi = {
      notes: "Creates a placemark",
      // validates a payload object with no additional properties
      validate: { payload: PlacemarkSpec, failAction: validationError},
-     //returns an object with additional properties
+     // returns an object with additional properties
      response: { schema: PlacemarkSpecPlus, failAction: validationError },
   },
 
