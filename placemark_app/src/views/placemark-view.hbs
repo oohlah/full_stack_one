@@ -1,0 +1,16 @@
+{{> menu}}
+
+<form class="box"  action="/placemark/{{category._id}}/updateplacemark/{{placemark._id}}" method="POST">
+  <label>Update PlaceMark Details:</label>
+  <div class="field is-horizontal">
+    <div class="field-body">
+      <div class="field">
+        <input class="input" type="text" name="title", value="{{placemark.name}}">
+      </div>
+      <div class="field">
+        <input class="input" type="text" name="artist" value="{{placemark.description}}">
+      </div>
+    </div>
+  </div>
+  <button class="button is-primary">Update PlaceMark</button>
+</form>
