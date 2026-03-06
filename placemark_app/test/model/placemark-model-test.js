@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 import { assert } from "chai";
 import { EventEmitter } from "events";
 import { db } from "../../src/models/db.js";
@@ -60,7 +61,7 @@ suite("Placemark Model tests", () => {
   test("get a placemark by Id - success", async () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
    const returnedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
-   assertSubset(liffey, returnedPlacemark); 
+   assertSubset(returnedPlacemark, liffey); 
   });
 
 
