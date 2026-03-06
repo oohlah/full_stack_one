@@ -1,9 +1,15 @@
 {{> menu}}
 
-<section class="section">
-  <div class="title">
-    {{category.title}}
+
+<section class="section columns is-vcentered">
+  <div class="column has-text-centered">
+    <div class="title">
+      {{category.title}}
+    </div>
+    {{> list-placemarks}}
+    {{> add-placemark}}
   </div>
-  {{> list-placemarks}}
-  {{> add-placemark}}
+  <div class="column">
+    {{> placemark-image }}
+  </div>
 </section>
