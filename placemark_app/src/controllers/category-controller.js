@@ -25,6 +25,7 @@ export const categoryController = {
         // weather
         // location
       };
+      console.log(newPlacemark);
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       return h.redirect(`/category/${category._id}`);
     },
