@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray, IdSpec, UserSpecPlus, UserSpec } from "../models/joi-schema.js";
+import { UserArray, IdSpec, UserSpecPlus, UserSpec, UserCredentialsSpec, JwtAuth } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -45,14 +45,12 @@ export const userApi = {
      notes: "Returns user details",
      // validate incoming id
      validate: { params: { id: IdSpec }, failAction: validationError },
-     //return one
+     // return one
      response: { schema: UserSpecPlus, failAction: validationError},
   },
 
   create: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false, // false so creation of user before authentication
     handler: async function (request, h) {
       try {
         const user = await db.userStore.addUser(request.payload);
@@ -88,13 +86,11 @@ export const userApi = {
      tags: ["api"],
      description: "Delete all users",
      notes: "Deletes all users",
-     //nothing being validated, nothing being returned
+     // nothing being validated, nothing being returned
   },
 
    authenticate: {
-    auth: {
-      strategy: "jwt",
-    },
+    auth: false, // false so authentication can happen 
     handler: async function (request, h) {
       try {
         const user = await db.userStore.getUserByEmail(request.payload.email);
@@ -110,5 +106,11 @@ export const userApi = {
         return Boom.serverUnavailable("Database Error");
       }
     },
+     tags: ["api"],
+    description: "Authenticate  a User",
+    notes: "If user has valid email/password, create and return a JWT token",
+    validate: { payload: UserCredentialsSpec, failAction: validationError },
+    response: { schema: JwtAuth, failAction: validationError }
   },
+   
 };
