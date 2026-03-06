@@ -47,4 +47,5 @@ export const seedData = {
       description: "It's a River in the Congo",
       categoryid: "->categories.rivers"
   }
+}
 };
