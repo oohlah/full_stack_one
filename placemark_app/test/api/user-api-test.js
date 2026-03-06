@@ -2,14 +2,14 @@ import { assert } from "chai";
 import { placemarkService } from "./placemark-service.js";
 import { maggie, maggieCredentials, testUsers } from "../fixtures.js";
 import { assertSubset } from "../test-utils.js";
-import { db } from "../../src/models/db.js";
+// import { db } from "../../src/models/db.js";
 
 const users = new Array(testUsers.length);
 
 suite("User API tests", () => {
  
   setup(async () => {
-     db.init();
+    //  db.init();
       placemarkService.clearAuth();
       await placemarkService.createUser(maggie);
       await placemarkService.authenticate(maggieCredentials);
