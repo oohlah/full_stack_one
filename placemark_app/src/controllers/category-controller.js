@@ -5,9 +5,9 @@ export const categoryController = {
     handler: async function (request, h) {
       const category = await db.categoryStore.getCategoryById(request.params.id);
       const viewData = {
-        title: "categories",
+        title: "Category",
         category: category,
-        placemarks: category.placemark,
+        // placemarks: category.placemark,
       };
       return h.view("category-view", viewData);
     },
