@@ -20,4 +20,20 @@ export const seedData = {
       password: "secret"
     }
   },
+  categories: {
+    _model: "Category",
+    rivers: {
+      title: "Rivers",
+      userid: "->users.bart"
+    }
+  },
+  placemarks: {
+    _model : "Placemark",
+    placemark_1 : {
+      name: "liffey",
+      category: "Rivers",
+      description: "It's a River in Dublin",
+      categoryid: "->categories.rivers"
+    },
+  }
 };
