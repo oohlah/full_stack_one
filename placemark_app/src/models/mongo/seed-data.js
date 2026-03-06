@@ -35,5 +35,16 @@ export const seedData = {
       description: "It's a River in Dublin",
       categoryid: "->categories.rivers"
     },
+    placemark_2 : {
+      name: "Yangtze River",
+      category: "Rivers",
+      description: "It's a River in China",
+      categoryid: "->categories.rivers"
+    },
+    placemark_3 : {
+      name: "Congo River",
+      category: "Rivers",
+      description: "It's a River in the Congo",
+      categoryid: "->categories.rivers"
   }
 };
