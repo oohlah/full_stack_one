@@ -96,7 +96,7 @@ async function init() {
 
 process.on("unhandledRejection", (err) => {
   console.log(err);
-  process.exit(1);
+  // process.exit(1);
 });
 
 init();
