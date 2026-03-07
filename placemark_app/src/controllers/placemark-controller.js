@@ -18,23 +18,23 @@ export const placemarkController = {
     },
   },
 
-//   update: {
-//     validate: {
-//       payload: PlacemarkSpec,
-//       options: { abortEarly: false },
-//       failAction: function (request, h, error) {
-//         return h.view("placemark-view", { title: "Edit placemark error", errors: error.details }).takeover().code(400);
-//       },
-//     },
-//     handler: async function (request, h) {
-//       const placemark = await db.placemarkStore.getPlacemarkById(request.params.trackid);
-//       const newPlacemark = {
-//         title: request.payload.title,
-//          category: category.title,
-//          description: request.payload.description,
-//       };
-//       await db.placemarkStore.updatePlacemark(placemark, newPlacemark);
-//       return h.redirect(`/category/${request.params.id}`);
-//     },
-//   },
+   update: {
+     validate: {
+       payload: PlacemarkSpec,
+       options: { abortEarly: false },
+       failAction: function (request, h, error) {
+         return h.view("placemark-view", { title: "Edit placemark error", errors: error.details }).takeover().code(400);
+       },
+     },
+     handler: async function (request, h) {
+       const placemark = await db.placemarkStore.getPlacemarkById(request.params.trackid);
+       const newPlacemark = {
+         title: request.payload.title,
+          category: category.title,
+          description: request.payload.description,
+       };
+       await db.placemarkStore.updatePlacemark(placemark, newPlacemark);
+       return h.redirect(`/category/${request.params.id}`);
+     },
+   },
 };
