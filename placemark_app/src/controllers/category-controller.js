@@ -8,7 +8,6 @@ export const categoryController = {
       const viewData = {
         title: "Category",
         category: category,
-        // placemarks: category.placemark,
       };
       return h.view("category-view", viewData);
     },
@@ -44,6 +43,7 @@ export const categoryController = {
     handler: async function (request, h) {
       try {
         const category = await db.categoryStore.getCategoryById(request.params.id);
+        console.log("CATEGORY: ", category);
         const file = request.payload.imagefile;
         if (Object.keys(file).length > 0) {
           const url = await imageStore.uploadImage(request.payload.imagefile);
@@ -62,5 +62,18 @@ export const categoryController = {
       maxBytes: 209715200,
       parse: true,
     },
+  },
+  deleteImage: {
+    handler: async function (request, h) {
+      const category = await db.categoryStore.getCategoryById(request.params.id);
+      const file = category.img; // file is img associated with category
+      if (Object.keys(file).length > 0) {
+          await imageStore.deleteImage(file); // delete file from cloudinary
+          category.img = null; // category img is null
+          await db.categoryStore.updateCategory(category); // updateCategory
+        }
+      return h.redirect(`/category/${category._id}`); // redirect to empty view 
+    },
+    
   },
 };
