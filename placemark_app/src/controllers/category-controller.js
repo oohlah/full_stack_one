@@ -1,5 +1,6 @@
 import { db } from "../models/db.js";
 import { imageStore } from "../models/image-store.js";
+import { geoUtils } from "../utils/geoapify_utils.js";
 
 export const categoryController = {
   index: {
@@ -16,14 +17,19 @@ export const categoryController = {
   addPlacemark: {
     handler: async function (request, h) {
       const category = await db.categoryStore.getCategoryById(request.params.id);
+
+      const placemarkName = request.payload.name;
+      // should also get country or city code and add as param
+      const coords = await geoUtils.getPlacemarkCoordinates(placemarkName);
+      console.log(result);
+
       const newPlacemark = {
         name: request.payload.name,
         category: category.title,
         description: request.payload.description,
-        // analytics
+        location: coords,
         // image
         // weather
-        // location
       };
       console.log(newPlacemark);
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
