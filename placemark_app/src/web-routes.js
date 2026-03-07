@@ -23,6 +23,9 @@ export const webRoutes = [
    { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
    { method: "GET", path: "/category/{id}/deleteImage", config: categoryController.deleteImage},
 
+     { method: "GET", path: "/placemark/{id}/editplacemark/{placemarkid}", config: trackController.index },
+  { method: "POST", path: "/placemark/{id}/updateplacemark/{placemarkid}", config: trackController.update },
+
 
 
 
