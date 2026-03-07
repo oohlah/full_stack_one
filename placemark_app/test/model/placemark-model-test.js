@@ -11,7 +11,7 @@ suite("Placemark Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init("mongo");
+    db.init("json");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);
@@ -24,7 +24,7 @@ suite("Placemark Model tests", () => {
   test("create a placemark", async () => {
     const returnedPlacemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
     assert.isNotNull(returnedPlacemark._id)
-    assertSubset(returnedPlacemark, liffey);
+    assertSubset(liffey, returnedPlacemark);
     
    
   });
@@ -61,7 +61,7 @@ suite("Placemark Model tests", () => {
   test("get a placemark by Id - success", async () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
    const returnedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
-   assertSubset(returnedPlacemark, liffey); 
+   assertSubset(liffey, returnedPlacemark); 
   });
 
 
