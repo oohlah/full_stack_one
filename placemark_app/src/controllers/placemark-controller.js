@@ -1,5 +1,5 @@
-import { PlacemarkSpec } from "../models/joi-schemas.js";
 import { db } from "../models/db.js";
+import { PlacemarkSpec } from "../models/joi-schema.js";
 
 export const placemarkController = {
   index: {
@@ -27,12 +27,14 @@ export const placemarkController = {
        },
      },
      handler: async function (request, h) {
-       const placemark = await db.placemarkStore.getPlacemarkById(request.params.trackid);
+      const category = await db.categoryStore.getCategoryById(request.params.id);
+       const placemark = await db.placemarkStore.getPlacemarkById(request.params.placemarkid);
        const newPlacemark = {
-         title: request.payload.title,
+          name: request.payload.name,
           category: category.title,
           description: request.payload.description,
        };
+       console.log(newPlacemark);
        await db.placemarkStore.updatePlacemark(placemark, newPlacemark);
        return h.redirect(`/category/${request.params.id}`);
      },
