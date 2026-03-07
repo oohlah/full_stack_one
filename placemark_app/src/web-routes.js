@@ -1,6 +1,7 @@
 import { dashboardController } from "./controllers/dashboard-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
+import { placemarkController } from "./controllers/placemark-controller.js";
 
 export const webRoutes = [
   
@@ -19,12 +20,13 @@ export const webRoutes = [
    { method: "POST", path: "/category/{id}/addplacemark", config: categoryController.addPlacemark },
    { method: "GET", path: "/category/{id}/deleteplacemark/{placemarkid}", config: categoryController.deletePlacemark},
 
-   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
    { method: "POST", path: "/category/{id}/uploadimage", config: categoryController.uploadImage },
    { method: "GET", path: "/category/{id}/deleteImage", config: categoryController.deleteImage},
 
-     { method: "GET", path: "/placemark/{id}/editplacemark/{placemarkid}", config: trackController.index },
-  { method: "POST", path: "/placemark/{id}/updateplacemark/{placemarkid}", config: trackController.update },
+  { method: "GET", path: "/placemark/{id}/editplacemark/{placemarkid}", config: placemarkController.index },
+  { method: "POST", path: "/placemark/{id}/updateplacemark/{placemarkid}", config: placemarkController.update },
+
+   { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
 
 
 
