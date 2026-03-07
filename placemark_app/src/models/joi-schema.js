@@ -13,13 +13,9 @@ export const UserSpec = Joi.object()
   .keys({
     firstName: Joi.string().example("Homer").required(),
     lastName: Joi.string().example("Simpson").required(),
-    email: Joi.string().email().example("homer@simpson.com").required(),
-    password: Joi.string().example("secret").required(),
    
   })
   .label("UserDetails");
-
-
 
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
@@ -47,10 +43,8 @@ export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("Pl
 export const CategorySpec =Joi.object()
 .keys({
     title: Joi.string().example("rivers").required(),
-    _id: IdSpec,
     userid: IdSpec,
     placemarks: PlacemarkArraySpec,
-  __v: Joi.number(),
 })
 .label("CategorySpec");
 

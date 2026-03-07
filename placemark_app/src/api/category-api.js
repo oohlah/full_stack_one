@@ -21,8 +21,6 @@ export const categoryApi = {
      description: "Find all categoryApi",
      notes: "Return all categories",
      // doesn't validate anything
-     // return an array
-     response: {schema: CategoryArray, failAction: validationError},
   },
 
   findOne: {

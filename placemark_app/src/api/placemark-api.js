@@ -19,8 +19,7 @@ export const placemarkApi = {
      tags: ["api"],
      description: "Find all placemarksApi",
      notes: "Return all placemarks",
-     // no validation, returns an array of placemarks
-     response: {schema: PlacemarkArraySpec, failAction: validationError},
+     // no validation,
   },
 
   findOne: {
