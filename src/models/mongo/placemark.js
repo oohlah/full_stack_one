@@ -10,6 +10,13 @@ const placemarkSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Placemark",
   },
-});
+  location: {
+    lat: Number,
+    lon: Number
+  },
+  temp: Number,
+  wind: Number
+  },
+);
 
 export const Placemark = Mongoose.model("Placemark", placemarkSchema);
