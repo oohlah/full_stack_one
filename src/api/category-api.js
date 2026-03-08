@@ -1,13 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { IdSpec,CategorySpec, CategorySpecPlus, CategoryArray } from "../models/joi-schema.js";
+import { IdSpec,CategorySpec, CategorySpecPlus, CategoryArraySpec, CategoryArraySpecV } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 
 export const categoryApi = {
   find: {
     auth: {
-      strategy: "jwt",
+      strategy: "jwt",f
     },
     handler: async function (request, h) {
       try {
@@ -20,7 +20,8 @@ export const categoryApi = {
     tags: ["api"],
      description: "Find all categoryApi",
      notes: "Return all categories",
-     // doesn't validate anything
+     // doesn't validate anything, returns an array
+     response: { schema: CategoryArraySpec, failAction: validationError },
   },
 
   findOne: {
@@ -90,7 +91,7 @@ deleteOne: {
      description: "create a category",
      notes: "creates a category api",
      // validates a payload with no additional properties
-    validate: { payload: CategorySpec, failAction: validationError},
+    validate: { payload: CategorySpec, failAction: validationError },
     // returns an item with additional properties,
     response: { schema: CategorySpecPlus, failAction: validationError },
 

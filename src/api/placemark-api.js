@@ -19,7 +19,8 @@ export const placemarkApi = {
      tags: ["api"],
      description: "Find all placemarksApi",
      notes: "Return all placemarks",
-     // no validation,
+     // no validation, returns an array - returning array without additional mongo properties
+     response: { schema: PlacemarkArraySpec, failAction: validationError },
   },
 
   findOne: {
@@ -64,8 +65,10 @@ export const placemarkApi = {
      tags: ["api"],
      description: "Create a placemarkApi",
      notes: "Creates a placemark",
-     // validates a payload object with no additional properties
-     validate: { payload: PlacemarkSpec, failAction: validationError},
+     // validates a payload object with no additional properties, and an id paramater
+     validate: { payload: PlacemarkSpec, params: { id: IdSpec }, failAction: validationError},
+      //  params: { id: IdSpec }, failAction: validationError // adding id param, becase Swagger doesn't work without it
+    
      // returns an object with additional properties
      response: { schema: PlacemarkSpecPlus, failAction: validationError },
   },
