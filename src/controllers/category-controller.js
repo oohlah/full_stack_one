@@ -1,6 +1,6 @@
 import { db } from "../models/db.js";
 import { imageStore } from "../models/image-store.js";
-import { geoUtils } from "../utils/geoapify_utils.js";
+import { geoUtils } from "../utils/geo_utils.js";
 
 export const categoryController = {
   index: {
@@ -17,22 +17,31 @@ export const categoryController = {
   addPlacemark: {
     handler: async function (request, h) {
       const category = await db.categoryStore.getCategoryById(request.params.id);
-
       const placemarkName = request.payload.name;
       // should also get country or city code and add as param
       const coords = await geoUtils.getPlacemarkCoordinates(placemarkName);
-      console.log(result);
+      // console.log("LAT: ", coords.lat, "LON:", coords.lon);
+      
+      // const ccode = request.payload.ccode;
 
+      const weather = await geoUtils.getWeatherFromCoordinates(coords);
+      
+      // console.log("TEMP", weather.temperature);
+      // console.log("WIND", weather.windSpeed);
+      
       const newPlacemark = {
         name: request.payload.name,
         category: category.title,
         description: request.payload.description,
         location: coords,
-        // image
-        // weather
+        temp: weather.temperature,
+        wind: weather.windSpeed,
       };
       console.log(newPlacemark);
+      
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
+      const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(category._id); 
+      console.log("CATEGORY PLACEMARKS:", placemarks);
       return h.redirect(`/category/${category._id}`);
     },
   },
