@@ -4,7 +4,8 @@
       <th>Name</th>
       <th>Category</th>
       <th>Description</th>
-      <th></th>
+      <th>Temperature</th>
+      <th>Wind Speed</th>
     </tr>
   </thead>
   <tbody>
@@ -18,6 +19,12 @@
         </td>
         <td>
           {{description}}
+        </td>
+         <td>
+          {{temp}}
+        </td>
+        <td>
+          {{wind}}
         </td>
          <td>
           <a href="/category/{{../category._id}}/deleteplacemark/{{_id}}" class="ui icon button">
