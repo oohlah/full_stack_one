@@ -29,21 +29,21 @@ export const PlacemarkSpec = Joi.object()
     category: Joi.string().example("river").optional(),
     description: Joi.string().example("It's a river in Dublin").required(),
     categoryid: IdSpec,
-    // categoryid: Joi.string().example("69ad51f88992c30c19e8ce7c").required(),
+    location: Joi.object({
+    lat: Joi.number().required(),
+    lon: Joi.number().required(),
+  }).optional(),
+    temp: Joi.number().optional(),
+    wind: Joi.number().optional(),
+   
 
-}).label("PlacemarkSpec");
+}).label("Placemark").optional();
 
 export const PlacemarkSpecPlus = PlacemarkSpec
 .keys({ 
-    _id: IdSpec,
+   _id: IdSpec,
    __v: Joi.number(),
-   location: Joi.object({
-    lat: Joi.number(),
-    lon: Joi.number()
-  }).optional(),
-  temp: Joi.number().optional(),
-  wind: Joi.number().optional()
-}).label("PlacemarkSpecPlus");
+}).label("PlacemarkSpecPlus").optional();
 
 
 // // this is for category validation
@@ -53,13 +53,14 @@ export const PlacemarkSpecPlus = PlacemarkSpec
 // export const PlacemarkArraySpecV = Joi.array().items(PlacemarkSpec).label("PlacemarkArray");
 
 // PlacemarkSpecPlus - includes additional response properties
-export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray");
+export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray").optional();
 
 export const CategorySpec =Joi.object()
 .keys({
-    title: Joi.string().example("rivers").required(),
+    title: Joi.string().example("river").required(),
     userid: IdSpec,
-    placemarks: Joi.array().items(PlacemarkSpecPlus).optional()
+    placemarks: PlacemarkArraySpec,
+    // placemarks: Joi.array().items(PlacemarkSpecPlus).optional()
 })
 .label("CategorySpec");
 
