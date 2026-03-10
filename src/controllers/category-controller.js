@@ -25,9 +25,7 @@ export const categoryController = {
       // const ccode = request.payload.ccode;
 
       const weather = await geoUtils.getWeatherFromCoordinates(coords);
-      
-      // console.log("TEMP", weather.temperature);
-      // console.log("WIND", weather.windSpeed);
+  
       
       const newPlacemark = {
         name: request.payload.name,
