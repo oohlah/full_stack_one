@@ -7,7 +7,7 @@ import { validationError } from "./logger.js";
 export const categoryApi = {
   find: {
     auth: {
-      strategy: "jwt",f
+      strategy: "jwt",
     },
     handler: async function (request, h) {
       try {
@@ -90,7 +90,7 @@ deleteOne: {
     tags: ["api"],
      description: "create a category",
      notes: "creates a category api",
-     // validates a payload with no additional properties
+     // validates a payload with no additional properties 
     validate: { payload: CategorySpec, failAction: validationError },
     // returns an item with additional properties,
     response: { schema: CategorySpecPlus, failAction: validationError },
