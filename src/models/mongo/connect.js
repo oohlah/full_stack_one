@@ -9,7 +9,7 @@ const seedLib = mongooseSeeder.default;
 async function seed() {
   const seeder = seedLib(Mongoose);
   // updated to false to persist data in monggoDB
-  const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: true });
+  const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: false });
   console.log(dbData);
 }
 
