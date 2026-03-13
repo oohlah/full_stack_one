@@ -35,6 +35,7 @@ export const PlacemarkSpec = Joi.object()
   }).optional(),
     temp: Joi.number().optional(),
     wind: Joi.number().optional(),
+
    
 
 }).label("Placemark").optional();
@@ -43,6 +44,7 @@ export const PlacemarkSpecPlus = PlacemarkSpec
 .keys({ 
    _id: IdSpec,
    __v: Joi.number(),
+   created: Joi.number().required(),
 }).label("PlacemarkSpecPlus").optional();
 
 
