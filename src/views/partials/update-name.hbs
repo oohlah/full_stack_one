@@ -1,0 +1,21 @@
+ <h6 class="title">Update Name</h6>
+<form class="section box" action="/settings/updatename" method="POST">
+<div class = "text mb-5">
+<p>Enter Both First Name and Last Name when Making a Change</p>
+</div>
+<div class="field is-horizontal">
+      <div class="field-body">
+     
+        <div class="field">
+            <p class = "mb-3">Current First Name: {{user.firstName}}</p>
+          <input class="input" type="text" placeholder="New first name" name="firstName">
+        </div>
+        <div class="field">
+            <p class = "mb-3">Current Last Name: {{user.lastName}}</p>
+          <input class="input" type="text" placeholder="New last name" name="lastName">
+        </div>
+      </div>
+    </div>
+    <button class="button is-link">Submit Change</button>
+  </form>
+</section>
