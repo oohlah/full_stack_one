@@ -4,8 +4,6 @@ export const geoUtils = {
 async getPlacemarkCoordinates(placemarkName) {
 
 let coords = null;
-let city = null;
-let country = null;
 
 const properName = placemarkName.trim().toLowerCase();
 const key=process.env.geoapify_key;  
