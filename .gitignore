@@ -4,6 +4,9 @@
 # OS files
 .DS_Store
 
+# Local JSON datastore
+src/models/json/db.json
+
 # Logs
 logs
 *.log
