@@ -19,6 +19,9 @@ lerna-debug.log*
 #references
 .references
 
+#firebase json credentials
+serviceAccountKey.json
+
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
