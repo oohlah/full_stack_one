@@ -21,6 +21,8 @@
   "main": "src/server.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
+    "api-test": "mocha --ui tdd test/api/**/*.js -exit",
+    "mem-test": "mocha --ui tdd test/model/**/*.js -exit",
     "start": "node src/server.js",
     "lint": "./node_modules/.bin/eslint . --ext .js",
     "dev": "./node_modules/.bin/nodemon  src/server.js"
