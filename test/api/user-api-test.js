@@ -32,13 +32,13 @@ suite("User API tests", () => {
   });
 
     test("get a user", async () => {
-    const returnedUser = await placemarkService.getUser(users[0]._id);
+    const returnedUser = await placemarkService.getUserById(users[0]._id);
     assertSubset(users[0], returnedUser);
    });
 
     test("get a user - bad id", async () => {
     try {
-      const returnedUser = await placemarkService.getUser("1234");
+      const returnedUser = await placemarkService.getUserById("1234");
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
@@ -52,7 +52,7 @@ suite("User API tests", () => {
      await placemarkService.authenticate(maggieCredentials); // auth email and password only
     try {
         // users returned from database
-      const returnedUser = await placemarkService.getUser(users[0]._id);
+      const returnedUser = await placemarkService.getUserById(users[0]._id);
       assert.fail("Should not return a response");
     } catch (error) {
       assert(error.response.data.message === "No User with this id");
@@ -70,5 +70,26 @@ suite("User API tests", () => {
     returnedUsers = await placemarkService.getAllUsers();
     // other 3 users are deleted - only one authenticated users left
     assert.equal(returnedUsers.length, 1);
+  });
+
+    test("update user first and last name - success", async () => {
+   
+      const user = await placemarkService.createUser(testUsers[0]);
+      console.log("USER", user);
+
+      const updates = {
+        firstName: "newFirstname",
+        lastName: "newLastName"
+     
+      }
+
+      // update user with updates
+      await placemarkService.updateUserName(user._id, updates);
+
+      // return updated user
+     const updatedUser = await placemarkService.getUserById(user._id);
+     console.log("UPDATED: ", updatedUser);
+     assert.strictEqual(updatedUser.firstName, updates.firstName);
+     assert.strictEqual(updatedUser.lastName, updates.lastName);
   });
 });

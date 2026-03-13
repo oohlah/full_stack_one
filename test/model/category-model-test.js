@@ -10,7 +10,7 @@ EventEmitter.setMaxListeners(25);
 suite("Category Model tests", () => {
  
   setup(async () => {
-    db.init("firebase");
+    db.init("mem");
      await db.userStore.deleteAll();
      await db.categoryStore.deleteAllCategories();
     for (let i = 0; i < testCategories.length; i += 1) {

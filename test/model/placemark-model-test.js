@@ -11,7 +11,7 @@ suite("Placemark Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init("firebase");
+    db.init("mem");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);

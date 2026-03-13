@@ -12,7 +12,7 @@ EventEmitter.setMaxListeners(25);
 suite("User Model tests", () => {
   
   setup(async () => {
-    db.init("firebase");
+    db.init("json");
      await db.userStore.deleteAll();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -64,6 +64,25 @@ suite("User Model tests", () => {
    const returnedUsers = await db.userStore.getAllUsers();
    assert.equal(returnedUsers.length, 3);
   });
+  test("update a user's first and last name - success", async () => {
+  
+  const user = testUsers[0];
+ 
+  // firstName and lastName to be updated to..
+  const updates = {
+    firstName: "newFirstName",
+    lastName: "newLastName"
+  };
+
+  await db.userStore.updateUserName(user._id, updates);
+
+  // get the updated user
+   const updatedUser = await db.userStore.getUserById(user._id);
+
+  // updated entered should match first and last name of returned user
+  assert.strictEqual(updatedUser.firstName, updates.firstName);
+  assert.strictEqual(updatedUser.lastName, updates.lastName);
+});
 });
 
 
