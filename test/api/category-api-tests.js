@@ -30,8 +30,6 @@ suite(" Category Api tests", () => {
     try{
     const returnedCategory = await placemarkService.createCategory(river);
 
-    console.log("RIVER:", river);
-    console.log("RETURNED CATEGORY:", returnedCategory)
     assert.isNotNull(returnedCategory);
     assertSubset(river, returnedCategory);
     }catch (error){

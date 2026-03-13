@@ -11,7 +11,7 @@ suite("Placemark Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init("json");
+    db.init("firebase");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);
@@ -22,9 +22,18 @@ suite("Placemark Model tests", () => {
   });
 
   test("create a placemark", async () => {
-    const returnedPlacemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
+    await db.placemarkStore.deleteAllPlacemarks();
+    // copy liffey fixture - firestore is giving it an _id
+    const freshPlacemark = { ...liffey};
+    // if freshPlacemark has an _id remove it
+    if(freshPlacemark._id){delete freshPlacemark._id;}
+    // give it the same categoryid as bodyOfWater._id
+    freshPlacemark.categoryid = bodyOfWater._id;
+    const returnedPlacemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, freshPlacemark);
+    
     assert.isNotNull(returnedPlacemark._id)
-    assertSubset(liffey, returnedPlacemark);
+    // compare subset with same id as superset 
+    assertSubset(freshPlacemark, returnedPlacemark);
     
    
   });
@@ -61,6 +70,8 @@ suite("Placemark Model tests", () => {
   test("get a placemark by Id - success", async () => {
    const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
    const returnedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
+   console.log("LIFFEY:", liffey);
+   console.log("RETURNED: ", returnedPlacemark);
    assertSubset(liffey, returnedPlacemark); 
   });
 

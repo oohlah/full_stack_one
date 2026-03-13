@@ -18,7 +18,11 @@ suite("Placemark API tests", () => {
     await placemarkService.authenticate(maggieCredentials);
     river.userid= user._id;
     bodyOfWater = await placemarkService.createCategory(river);
-    liffey.categoryid= bodyOfWater._id;
+     // make sure all placemarks have the correct _id - don't let firestore assign it
+   liffey.categoryid = bodyOfWater._id;
+    for (let i = 0; i < testPlacemarks.length; i += 1) {
+      testPlacemarks[i].categoryid = bodyOfWater._id;
+    }
    
 
   });
@@ -65,12 +69,15 @@ suite("Placemark API tests", () => {
   });
 
   test("test denormalised category", async () => {
+    await placemarkService.deleteAllPlacemarks();
       for (let i = 0; i < testPlacemarks.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
       await placemarkService.createPlacemark(bodyOfWater._id, testPlacemarks[i]);
     }
     const returnedCategory = await placemarkService.getCategory(bodyOfWater._id);
     assert.equal(returnedCategory.placemarks.length, testPlacemarks.length);
+    console.log("RETURNED: ",returnedCategory);
+    console.log("TEST PLACEMARKS",testPlacemarks);
     for (let i = 0; i < testPlacemarks.length; i += 1) {
       assertSubset(testPlacemarks[i], returnedCategory.placemarks[i]);
     }

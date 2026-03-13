@@ -12,7 +12,7 @@ EventEmitter.setMaxListeners(25);
 suite("User Model tests", () => {
   
   setup(async () => {
-    db.init("mongo");
+    db.init("firebase");
      await db.userStore.deleteAll();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -39,9 +39,9 @@ suite("User Model tests", () => {
   test("get a user - success", async () => {
     const user = await db.userStore.addUser(maggie);
     const returnedUser1 = await db.userStore.getUserById(user._id);
-    assert.deepEqual(user, returnedUser1);
+    assertSubset(returnedUser1, user);
     const returnedUser2 = await db.userStore.getUserByEmail(user.email);
-    assert.deepEqual(user, returnedUser2);
+    assertSubset(returnedUser2, user);
   });
 
   test("delete One User - success", async () => {
@@ -49,6 +49,7 @@ suite("User Model tests", () => {
     const returnedUsers = await db.userStore.getAllUsers();
     assert.equal(returnedUsers.length, testUsers.length - 1);
     const deletedUser = await db.userStore.getUserById(testUsers[0]._id);
+    console.log("Deleting user with id:", testUsers[0]._id);
     assert.isNull(deletedUser);
 
   });

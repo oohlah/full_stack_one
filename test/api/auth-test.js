@@ -3,7 +3,7 @@ import { placemarkService } from "./placemark-service.js";
 import { decodeToken } from "../../src/api/jwt-utils.js";
 import { maggie, maggieCredentials } from "../fixtures.js";
 
-suite("Authentication API tests", async () => {
+suite("Authentication API tests", () => {
   setup(async () => {
     placemarkService.clearAuth();
     await placemarkService.createUser(maggie);
