@@ -25,7 +25,7 @@ export const userMemStore = {
     return u;
   },
 
-  async updateUser(userid, updates){
+  async updateUserName(userid, updates){
    
      if (!updates.firstName || !updates.lastName) {
     throw new Error("Both first and last name required");

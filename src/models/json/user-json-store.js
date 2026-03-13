@@ -29,6 +29,18 @@ export const userJsonStore = {
     return u;
   },
 
+  async updateUserName(userid, updates) {
+    await db.read();
+    const foundUser = db.data.users.find((user) => user._id === userid);
+    if (foundUser) {
+      // target object, merge source
+      Object.assign(foundUser, updates);
+      await db.write();
+      return foundUser;
+    }
+    return null;
+  },
+
   async deleteUserById(id) {
     await db.read();
     const index = db.data.users.findIndex((user) => user._id === id);

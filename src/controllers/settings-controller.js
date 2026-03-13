@@ -27,7 +27,7 @@ export const settingsController = {
     const newFirstName = request.payload.firstName;
     const newLastName = request.payload.lastName;
 
-    const updatedUser = await db.userStore.updateUser(user._id, {
+    const updatedUser = await db.userStore.updateUserName(user._id, {
         firstName: newFirstName,
         lastName: newLastName,
         });
