@@ -11,13 +11,18 @@ placemarkUrl: serviceUrl,
     return res.data;
   },
 
-  async getUser(id) {
+  async getUserById(id) {
     const res = await axios.get(`${this.placemarkUrl}/api/users/${id}`);
     return res.data;
   },
 
    async getAllUsers() {
     const res = await axios.get(`${this.placemarkUrl}/api/users`);
+    return res.data;
+  },
+
+   async updateUserName(id, updates) {
+    const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}`, updates);
     return res.data;
   },
 
