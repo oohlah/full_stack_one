@@ -9,6 +9,16 @@ export const UserCredentialsSpec = Joi.object()
 })
 .label("UserCredentials");
 
+// User Spec for Updating First and last Name
+export const UserSpecName = Joi.object().keys({
+    firstName: Joi.string().example("Homer").optional(),
+    lastName: Joi.string().example("Simpson").optional(),
+   
+  })
+
+
+// USER CREDENTIALS - Additional Properties
+
 export const UserSpec = UserCredentialsSpec.keys({
     firstName: Joi.string().example("Homer").required(),
     lastName: Joi.string().example("Simpson").required(),
@@ -18,7 +28,7 @@ export const UserSpec = UserCredentialsSpec.keys({
 
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
-  __v: Joi.number(),
+  __v: Joi.number().optional, // part of mongo
 }).label("UserDetailsPlus");
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
