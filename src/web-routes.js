@@ -2,6 +2,7 @@ import { dashboardController } from "./controllers/dashboard-controller.js";
 import { accountsController } from "./controllers/accounts-controller.js";
 import { categoryController } from "./controllers/category-controller.js";
 import { placemarkController } from "./controllers/placemark-controller.js";
+import { settingsController } from "./controllers/settings-controller.js";
 
 export const webRoutes = [
   
@@ -25,6 +26,8 @@ export const webRoutes = [
 
   { method: "GET", path: "/placemark/{id}/editplacemark/{placemarkid}", config: placemarkController.index },
   { method: "POST", path: "/placemark/{id}/updateplacemark/{placemarkid}", config: placemarkController.update },
+
+  { method: "GET", path: "/settings", config: settingsController.index },
 
    { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
 
