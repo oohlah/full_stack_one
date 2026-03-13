@@ -25,6 +25,23 @@ export const userMemStore = {
     return u;
   },
 
+  async updateUser(userid, updates){
+   
+     if (!updates.firstName || !updates.lastName) {
+    throw new Error("Both first and last name required");
+}
+
+    const foundUser = users.find((u) => u._id === userid);
+
+    if (foundUser) {
+    // Merge the updates with existing user
+    Object.assign(foundUser, updates);
+
+    return foundUser;
+    }
+    return null;
+  },
+
   async deleteUserById(id) {
     const index = users.findIndex((user) => user._id === id);
     if(index !== -1) users.splice(index, 1);
