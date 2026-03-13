@@ -16,6 +16,7 @@ import { accountsController} from "./controllers/accounts-controller.js";
 import { validate } from "./api/jwt-utils.js";
 import { apiRoutes } from "./api-routes.js";
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -24,6 +25,7 @@ if (result.error) {
   console.log(result.error.message);
   // process.exit(1);
 }
+
 
 const swaggerOptions = {
   info: {
@@ -86,7 +88,8 @@ async function init() {
   });
   server.auth.default("session");
 
-  db.init("mongo");
+  db.init("firebase");
+  // db.init("mongo");
   server.route(webRoutes);
   server.route(apiRoutes);
   await server.start();
