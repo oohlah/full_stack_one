@@ -48,7 +48,9 @@ async addUser(user) {
     try {
     const docRef = userCollection.doc(); // create id
     user._id = docRef.id;
+    console.log("ADDING USER TO FIRESTORE:", user);
     await docRef.set(user);
+    
     return user;
 
   } catch (error) {
@@ -57,6 +59,7 @@ async addUser(user) {
   }
 
 },
+
 
 async getUserByEmail(email){
   try {
@@ -101,6 +104,47 @@ async updateUserEmail(id, payload){
   }
  return null;
 },
+
+async checkCurrentPassword(currentPassword, user){
+
+   try {
+      // users collection and  doc id
+      const userDoc = await userCollection.doc(user._id).get();
+
+      if (!userDoc.exists) {
+        return false;
+      }
+
+      const foundUser = userDoc.data();
+
+      // simple comparison (no bcrypt)
+      return currentPassword === foundUser.password;
+
+    } catch (err) {
+      console.error("Error checking current password:", err);
+      return false;
+    }
+
+},
+
+ async updatePassword(newPassword, user) {
+     // user reference
+      const userRef = userCollection.doc(user._id);
+      // get doc from userRef
+      const userDoc = await userRef.get();
+
+      if (!userDoc.exists) {
+        return false;
+      }
+      // update password with newPassword
+      await userRef.update({ password: newPassword });
+      // get updated user object
+      const updatedDoc = await userRef.get();
+      // return id as _id
+      return { _id: updatedDoc.id, ...updatedDoc.data() };
+  
+    },
+
 
 async deleteUserById(id) {
     try {

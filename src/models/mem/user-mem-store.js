@@ -58,6 +58,30 @@ export const userMemStore = {
     return null;
   },
 
+  async checkCurrentPassword(currentPassword, user){
+   
+  
+    const foundUser = users.find((u) => u._id === user._id);
+
+    let match;
+    if (foundUser) {
+      match = currentPassword === foundUser.password;
+      return match;
+    }
+   
+    return null;
+  },
+
+  async updatePassword(newPassword, user) {
+     
+      const foundUser = db.data.users.find((u) => u._id === user._id);
+      if (foundUser) {
+        foundUser.password = newPassword;
+        return foundUser.password;
+      }
+      return null;
+    },
+
   async deleteUserById(id) {
     const index = users.findIndex((user) => user._id === id);
     if(index !== -1) users.splice(index, 1);

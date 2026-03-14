@@ -53,6 +53,31 @@ export const userJsonStore = {
     return null;
   },
 
+    async checkCurrentPassword(currentPassword, user) {
+    await db.read();
+    const foundUser = db.data.users.find((name) => name._id === user._id);
+    let match;
+    if (foundUser) {
+      match = currentPassword === foundUser.password;
+    }
+    // return true if match else return null
+    if (match) {
+      return match;
+    }
+    return null;
+  },
+
+   async updatePassword(newPassword, user) {
+    await db.read();
+    const foundUser = db.data.users.find((u) => u._id === user._id);
+    if (foundUser) {
+      foundUser.password = newPassword;
+      await db.write();
+      return foundUser.password;
+    }
+    return null;
+  },
+
   async deleteUserById(id) {
     await db.read();
     const index = db.data.users.findIndex((user) => user._id === id);
