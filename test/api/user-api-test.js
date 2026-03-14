@@ -91,4 +91,21 @@ suite("User API tests", () => {
       const returnedUser = await placemarkService.updateUserEmail(user._id, updatedEmail);
       assert.strictEqual(updatedEmail.email, returnedUser.email);
     })
+
+    test("test password match and update - success", async () => {
+    
+      const user = testUsers[0];
+      const currentPassword = user.password;
+      const match = await await placemarkService.checkCurrentPassword(currentPassword,user);
+      assert.isTrue(match);
+    
+       const newPassword = { password: "newPassword"};
+       await placemarkService.updatePassword(newPassword, user);
+    
+      // get the updated user
+       const updatedUser = await placemarkService.getUserById(user._id);
+    
+      assert.strictEqual(updatedUser.password, updatedUser.password);
+    
+    });
 });
