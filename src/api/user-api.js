@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray, IdSpec, UserSpecPlus, UserSpec, UserSpecName, UserCredentialsSpec, JwtAuth } from "../models/joi-schema.js";
+import { UserArray, IdSpec, UserSpecPlus, UserSpec, UserSpecName, UserSpecEmail, UserCredentialsSpec, JwtAuth } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -70,13 +70,14 @@ export const userApi = {
      // excpect response to include additional properties
      response: { schema: UserSpecPlus, failAction: validationError },
   },
-    updateName: {
+    updateUserName: {
        auth: { strategy: "jwt" },
        handler: async function(request, h) {
        const { id } = request.params;
-       const {payload} = request; // patial update - can be any field for api
+       const name = request.payload; // patial update - can be any field for api
        try {
-         const updatedUser = await db.userStore.updateUser(id, payload);
+         const updatedUser = await db.userStore.updateUserName(id, name);
+         console.log("UPDATED USER:", updatedUser);
          if (!updatedUser) return Boom.notFound("User not found");
           return updatedUser;
           } catch (err) {
@@ -84,12 +85,36 @@ export const userApi = {
          }
        },
         tags: ["api"],
-       description: "Update a user",
-       notes: "Update one or more fields of a user",
+       description: "Update user email",
+       notes: "Update first and last name of user",
        validate: { 
        params: { id: IdSpec },
        // payload is just the first and last name
        payload: UserSpecName, failAction: validationError }, // allow partial updates
+      // respose is the full user spec
+      response: { schema: UserSpecPlus, failAction: validationError },
+      },
+
+       updateUserEmail: {
+       auth: { strategy: "jwt" },
+       handler: async function(request, h) {
+       const { id } = request.params;
+       const email = request.payload; // patial update - can be any field for api
+       try {
+         const updatedUser = await db.userStore.updateUserEmail(id, email);
+         if (!updatedUser) return Boom.notFound("User not found");
+          return updatedUser;
+          } catch (err) {
+           return Boom.serverUnavailable("Database error");
+         }
+       },
+        tags: ["api"],
+       description: "Update user email",
+       notes: "Update email field of user",
+       validate: { 
+       params: { id: IdSpec },
+       // payload is just the first and last name
+       payload: UserSpecEmail, failAction: validationError }, // allow partial updates
       // respose is the full user spec
       response: { schema: UserSpecPlus, failAction: validationError },
       },
