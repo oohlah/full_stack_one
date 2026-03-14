@@ -120,29 +120,6 @@ export const userApi = {
       response: { schema: UserSpecPlus, failAction: validationError },
       },
 
-      //  updatePassword: {
-      //  auth: { strategy: "jwt" },
-      //  handler: async function(request, h) {
-      //  const { id } = request.params;
-      //  const password = request.payload; // patial update - can be any field for api
-      //  try {
-      //    const updatedUser = await db.userStore.updatePassword(password, id);
-      //    if (!updatedUser) return Boom.notFound("User not found");
-      //     return updatedUser;
-      //     } catch (err) {
-      //      return Boom.serverUnavailable("Database error");
-      //    }
-      //  },
-      //   tags: ["api"],
-      //  description: "Update user password",
-      //  notes: "Update password field of user",
-      //  validate: { 
-      //  params: { id: IdSpec },
-      //  // payload iis just the email 
-      //  payload: UserSpecPassword, failAction: validationError }, // allow partial updates
-      // // respose is the full user spec
-      // response: { schema: UserSpecPlus, failAction: validationError },
-      // },
    updatePassword: {
   auth: { strategy: "jwt" },
   handler: async function(request, h) {

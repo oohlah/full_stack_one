@@ -1,6 +1,6 @@
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { IdSpec, PlacemarkSpec, PlacemarkSpecPlus, PlacemarkArraySpec} from "../models/joi-schema.js";
+import { IdSpec, PlacemarkSpec, PlacemarkSpecPlus, PlacemarkArraySpec, PlacemarkSpecUpdate} from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 
 export const placemarkApi = {
@@ -72,6 +72,34 @@ export const placemarkApi = {
      // returns an object with additional properties
      response: { schema: PlacemarkSpecPlus, failAction: validationError },
   },
+
+   updatePlacemark: {
+         auth: { strategy: "jwt" },
+         handler: async function(request, h) {
+         const {id} = request.params;
+         const newPlacemark = request.payload; // name and description
+          console.log("Updating placemark:", id, newPlacemark);
+         try {
+           const updatedPlacemark = await db.placemarkStore.updatePlacemark(id, newPlacemark);
+           console.log("UPDATED Placemark:", updatedPlacemark);
+           if (!updatedPlacemark) return Boom.notFound("Placemark not found");
+            return updatedPlacemark;
+            } catch (err) {
+              console.error("API updatePlacemark error:", err);
+             return Boom.serverUnavailable("Database error");
+           }
+         },
+          tags: ["api"],
+         description: "Update a placemark",
+         notes: "Updates a Placemark",
+         validate: { 
+         params: { id: IdSpec },
+         // payload is just the first and last name
+         payload: PlacemarkSpecUpdate, failAction: validationError }, // allow partial updates
+        // respose is the full user spec
+        response: { schema: PlacemarkSpecPlus, failAction: validationError },
+        },
+  
 
   deleteAll: {
     auth: {
