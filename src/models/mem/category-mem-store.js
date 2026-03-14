@@ -21,7 +21,7 @@ export const categoryMemStore = {
   async getCategoryById(id) {
     const list = categories.find((category) => category._id === id);
     if(list){
-      list.placemark = await placemarkMemStore.getPlacemarkByCategoryId(list._id);
+      list.placemark = await placemarkMemStore.getPlacemarksByCategoryId(list._id);
       return list;
     }
     return null;
