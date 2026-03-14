@@ -18,7 +18,15 @@ export const UserSpecName = Joi.object().keys({
 
 // User Spec for Updating Email
 export const UserSpecEmail = Joi.object().keys({
-    email: Joi.string().email().example("homer@simpson.com").optional(),
+    email: Joi.string().email().example("homer@simpson.com").required(),
+   
+   
+  })
+
+  // User Spec for Updating Password
+  export const UserSpecPassword = Joi.object().keys({
+    currentPassword: Joi.string().example("secret").required(),
+    password: Joi.string().example("secret").required(),
    
    
   })
