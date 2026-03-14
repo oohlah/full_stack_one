@@ -16,7 +16,12 @@ export const UserSpecName = Joi.object().keys({
    
   })
 
-
+// User Spec for Updating Email
+export const UserSpecEmail = Joi.object().keys({
+    email: Joi.string().email().example("homer@simpson.com").optional(),
+   
+   
+  })
 // USER CREDENTIALS - Additional Properties
 
 export const UserSpec = UserCredentialsSpec.keys({
@@ -28,7 +33,7 @@ export const UserSpec = UserCredentialsSpec.keys({
 
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
-  __v: Joi.number().optional, // part of mongo
+  __v: Joi.number().optional(), // part of mongo
 }).label("UserDetailsPlus");
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
