@@ -90,6 +90,17 @@ async updateUserName(id, payload){
  return null;
 },
 
+async updateUserEmail(id, payload){
+    
+  const userRef = userCollection.doc(id);
+  await userRef.update(payload); // only updates details provided
+  const updatedSnapshot = await userRef.get();
+  if(updatedSnapshot.exists){
+    const updatedUser = { _id: updatedSnapshot.id, ...updatedSnapshot.data() };
+    return updatedUser;
+  }
+ return null;
+},
 
 async deleteUserById(id) {
     try {

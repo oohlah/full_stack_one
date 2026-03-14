@@ -27,6 +27,7 @@ export const userMemStore = {
 
   async updateUserName(userid, updates){
    
+    // check that both firstname and last name have been added
      if (!updates.firstName || !updates.lastName) {
     throw new Error("Both first and last name required");
 }
@@ -34,9 +35,24 @@ export const userMemStore = {
     const foundUser = users.find((u) => u._id === userid);
 
     if (foundUser) {
-    // Merge the updates with existing user
+   // Merge target with the source
     Object.assign(foundUser, updates);
 
+    return foundUser;
+    }
+    return null;
+  },
+ 
+  async updateUserEmail(userid, updatedEmail){
+   
+  
+    const foundUser = users.find((u) => u._id === userid);
+
+    if (foundUser) {
+    // Merge target with the source
+    Object.assign(foundUser, updatedEmail);
+   
+  
     return foundUser;
     }
     return null;
