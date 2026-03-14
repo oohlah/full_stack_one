@@ -101,6 +101,23 @@ test("update a user's email - success", async () => {
   assert.strictEqual(updatedUser.email, updates.email);
   
 });
+
+test("test password match and update - success", async () => {
+
+  const user = testUsers[0];
+  const currentPassword = user.password;
+  const match = await db.userStore.checkCurrentPassword(currentPassword,user);
+  assert.isTrue(match);
+
+   const newPassword = { password: "newPassword"};
+   await db.userStore.updatePassword(newPassword, user);
+
+  // get the updated user
+   const updatedUser = await db.userStore.getUserById(user._id);
+
+  assert.strictEqual(updatedUser.password, updatedUser.password);
+
 });
 
 
+});
