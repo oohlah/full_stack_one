@@ -89,8 +89,8 @@ export const settingsController = {
       }
 
       // password assigned from new password form
-      const password = request.payload.newPassword;
-      const newPassword = await db.userStore.updatePassword(password, user._id);
+      const payload = request.payload.password;
+      const newPassword = await db.userStore.updatePassword(payload, user._id);
       
       const viewData = {
         title: "User Settings",
