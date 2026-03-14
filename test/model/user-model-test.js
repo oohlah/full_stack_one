@@ -83,6 +83,24 @@ suite("User Model tests", () => {
   assert.strictEqual(updatedUser.firstName, updates.firstName);
   assert.strictEqual(updatedUser.lastName, updates.lastName);
 });
+
+test("update a user's email - success", async () => {
+  
+  const user = testUsers[0];
+ 
+  // firstName and lastName to be updated to..
+  const updates = {
+    email: "new@email.com"
+  };
+
+  await db.userStore.updateUserEmail(user._id, updates);
+
+  // get the updated user
+   const updatedUser = await db.userStore.getUserById(user._id);
+
+  assert.strictEqual(updatedUser.email, updates.email);
+  
+});
 });
 
 

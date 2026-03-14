@@ -21,11 +21,15 @@ placemarkUrl: serviceUrl,
     return res.data;
   },
 
-   async updateUserName(id, updates) {
-    const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}`, updates);
+   async updateUserName(id, updatedName) {
+    const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}/name`, updatedName);
     return res.data;
   },
 
+   async updateUserEmail(id, updatedEmail) {
+    const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}/email`, updatedEmail);
+    return res.data;
+  },
   async deleteAllUsers() {
     const res = await axios.delete(`${this.placemarkUrl}/api/users`);
     return res.data;

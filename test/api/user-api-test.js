@@ -72,24 +72,23 @@ suite("User API tests", () => {
     assert.equal(returnedUsers.length, 1);
   });
 
-    test("update user first and last name - success", async () => {
+    test("update user first,last name and email - success", async () => {
    
       const user = await placemarkService.createUser(testUsers[0]);
-      console.log("USER", user);
-
-      const updates = {
+      const updatedName = {
         firstName: "newFirstname",
-        lastName: "newLastName"
-     
-      }
-
+        lastName: "newLastName" }
       // update user with updates
-      await placemarkService.updateUserName(user._id, updates);
-
-      // return updated user
-     const updatedUser = await placemarkService.getUserById(user._id);
-     console.log("UPDATED: ", updatedUser);
-     assert.strictEqual(updatedUser.firstName, updates.firstName);
-     assert.strictEqual(updatedUser.lastName, updates.lastName);
+      const returnedUser = await placemarkService.updateUserName(user._id, updatedName);
+      assert.strictEqual(updatedName.firstName, returnedUser.firstName);
+      assert.strictEqual(updatedName.lastName, returnedUser.lastName);
+    
   });
+
+    test("update user email - success", async () => {
+       const user = await placemarkService.createUser(testUsers[1]);
+      const updatedEmail = { email: "new@email.com",} // user object with email property
+      const returnedUser = await placemarkService.updateUserEmail(user._id, updatedEmail);
+      assert.strictEqual(updatedEmail.email, returnedUser.email);
+    })
 });
