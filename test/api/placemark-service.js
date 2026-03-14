@@ -31,11 +31,6 @@ placemarkUrl: serviceUrl,
     return res.data;
   },
 
-//   async checkCurrentPassword(id, currentPassword) {
-//   const res = await axios.post(`${this.placemarkUrl}/api/users/${id}/password/check`, currentPassword);
-//   return res.data.match; // returns boolean valie
-// },
-
   async updatePassword(id, passwordData) {
     const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}/password`, passwordData);
     return res.data;
@@ -83,7 +78,10 @@ placemarkUrl: serviceUrl,
     const res = await axios.get(`${this.placemarkUrl}/api/placemarks`);
     return res.data;
   },
-
+    async updatePlacemark(id, updatedPlacemark) {
+    const res = await axios.patch(`${this.placemarkUrl}/api/placemarks/${id}/updateplacemark`, updatedPlacemark);
+    return res.data;
+  },
   async deletePlacemark(id) {
     const res = await axios.delete(`${this.placemarkUrl}/api/placemarks/${id}`);
     return res.data;
