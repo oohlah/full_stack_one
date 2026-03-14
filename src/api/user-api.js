@@ -1,7 +1,8 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { UserArray, IdSpec, UserSpecPlus, UserSpec, UserSpecName, UserSpecEmail, UserCredentialsSpec, JwtAuth } from "../models/joi-schema.js";
+import { UserArray, IdSpec, UserSpecPlus, UserSpec, UserSpecName, UserSpecEmail, 
+  UserSpecPassword, UserCredentialsSpec, JwtAuth } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 import { createToken } from "./jwt-utils.js";
 
@@ -118,6 +119,63 @@ export const userApi = {
       // respose is the full user spec
       response: { schema: UserSpecPlus, failAction: validationError },
       },
+
+      //  updatePassword: {
+      //  auth: { strategy: "jwt" },
+      //  handler: async function(request, h) {
+      //  const { id } = request.params;
+      //  const password = request.payload; // patial update - can be any field for api
+      //  try {
+      //    const updatedUser = await db.userStore.updatePassword(password, id);
+      //    if (!updatedUser) return Boom.notFound("User not found");
+      //     return updatedUser;
+      //     } catch (err) {
+      //      return Boom.serverUnavailable("Database error");
+      //    }
+      //  },
+      //   tags: ["api"],
+      //  description: "Update user password",
+      //  notes: "Update password field of user",
+      //  validate: { 
+      //  params: { id: IdSpec },
+      //  // payload iis just the email 
+      //  payload: UserSpecPassword, failAction: validationError }, // allow partial updates
+      // // respose is the full user spec
+      // response: { schema: UserSpecPlus, failAction: validationError },
+      // },
+   updatePassword: {
+  auth: { strategy: "jwt" },
+  handler: async function(request, h) {
+    const { id } = request.params;
+    const { currentPassword, password } = request.payload;
+
+    try {
+      const user = await db.userStore.getUserById(id);
+      if (!user) return Boom.notFound("User not found");
+
+      // check current password
+      if (user.password !== currentPassword) {
+        return Boom.unauthorized("Current password is incorrect");
+      }
+
+      // update password
+      const updatedUser = await db.userStore.updatePassword(password, id);
+      return updatedUser;
+
+    } catch (err) {
+      return Boom.serverUnavailable("Database error");
+    }
+  },
+  tags: ["api"],
+  description: "Change user password",
+  notes: "Checks current password and updates to new password if valid",
+  validate: {
+    params: { id: IdSpec },
+    payload: UserSpecPassword, // should include { currentPassword, newPassword }
+    failAction: validationError
+  },
+  response: { schema: UserSpecPlus, failAction: validationError },
+},
 
   deleteAll: {
     auth: {
