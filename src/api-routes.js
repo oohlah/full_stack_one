@@ -7,7 +7,8 @@ export const apiRoutes = [
   { method: "GET", path: "/api/users/{id}", config: userApi.findOne },
   { method: "POST", path: "/api/users", config: userApi.create },
   { method: "PATCH", path: "/api/users/{id}/name", config: userApi.updateUserName },
-   { method: "PATCH", path: "/api/users/{id}/email", config: userApi.updateUserEmail },
+  { method: "PATCH", path: "/api/users/{id}/email", config: userApi.updateUserEmail },
+  { method: "PATCH", path: "/api/users/{id}/password", config: userApi.updatePassword },
   { method: "DELETE", path: "/api/users", config: userApi.deleteAll },
 
   { method: "GET", path: "/api/categories", config: categoryApi.find },
