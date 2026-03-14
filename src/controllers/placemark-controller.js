@@ -18,7 +18,7 @@ export const placemarkController = {
     },
   },
 
-   update: {
+   updatePlacemark: {
      validate: {
        payload: PlacemarkSpec,
        options: { abortEarly: false },
@@ -35,7 +35,7 @@ export const placemarkController = {
           description: request.payload.description,
        };
        console.log(newPlacemark);
-       await db.placemarkStore.updatePlacemark(placemark, newPlacemark);
+       await db.placemarkStore.updatePlacemark(placemark._id, newPlacemark);
        return h.redirect(`/category/${request.params.id}`);
      },
    },
