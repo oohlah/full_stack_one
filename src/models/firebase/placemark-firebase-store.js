@@ -73,7 +73,7 @@ async getPlacemarkById(id) {
 },
 
 async updatePlacemark(id, payload){
-    
+try{ 
   const userRef = placemarkCollection.doc(id);
   await userRef.update(payload); // only updates details provided
   const updatedSnapshot = await userRef.get();
@@ -81,7 +81,11 @@ async updatePlacemark(id, payload){
     const updatedPlacemark = { _id: updatedSnapshot.id, ...updatedSnapshot.data() };
     return updatedPlacemark;
   }
- return null;
+  return null;
+ } catch (err) {
+    console.error("Firestore update error:", err);
+    throw err;
+  }
 },
 async deletePlacemark(id) {
     try {
