@@ -56,7 +56,7 @@ export const settingsController = {
 
   
     // Returns the whole user object
-    const updatedUser = await db.userStore.updateUserEmail(user._id, {
+  const updatedUser = await db.userStore.updateUserEmail(user._id, {
   email: request.payload.email
 });
 
@@ -73,5 +73,39 @@ export const settingsController = {
   },
   },
 
+   updatePassword: {
+    handler: async function (request, h){
 
+        const user = request.auth.credentials;
+      try{
+        const passwordMatch = await db.userStore.checkCurrentPassword(request.payload.currentPassword, user);
+
+         if (!passwordMatch) {
+        console.log("Invalid Current Password Entered");
+        const viewData = {
+          error: "Invalid Current Password. Please Try Again",
+        };
+        return h.view("settings-view", viewData);
+      }
+
+      // password assigned from new password form
+      const password = request.payload.newPassword;
+      const newPassword = await db.userStore.updatePassword(password, user);
+      
+      const viewData = {
+        title: "User Settings",
+      }
+
+      console.log("password Changed to ", newPassword);
+      return h.view("settings-view", viewData);
+     } catch (error) {
+      console.error("Authentication error:", error);
+      const viewData = {
+        error: "Unexpected error occurred. Please try again.",
+      };
+      // render settings-view with error if error occurs
+      return h.view("settings-view", viewData);
+    }
+  },
+}
 };
