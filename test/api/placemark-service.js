@@ -30,6 +30,16 @@ placemarkUrl: serviceUrl,
     const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}/email`, updatedEmail);
     return res.data;
   },
+
+//   async checkCurrentPassword(id, currentPassword) {
+//   const res = await axios.post(`${this.placemarkUrl}/api/users/${id}/password/check`, currentPassword);
+//   return res.data.match; // returns boolean valie
+// },
+
+  async updatePassword(id, passwordData) {
+    const res = await axios.patch(`${this.placemarkUrl}/api/users/${id}/password`, passwordData);
+    return res.data;
+  },
   async deleteAllUsers() {
     const res = await axios.delete(`${this.placemarkUrl}/api/users`);
     return res.data;
