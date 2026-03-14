@@ -46,6 +46,14 @@ export const UserSpecPlus = UserSpec.keys({
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
 
+// For validation of Update Placemark
+
+export const PlacemarkSpecUpdate = Joi.object()
+.keys({
+  name: Joi.string().example("the liffey").required(),
+  description: Joi.string().example("It's a river in Dublin").required(),
+  }).label("Update Placemark");
+
 export const PlacemarkSpec = Joi.object()
 .keys({
     name: Joi.string().example("the liffey").required(),
