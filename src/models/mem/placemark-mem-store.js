@@ -24,6 +24,11 @@ export const placemarkMemStore = {
     return p;
   },
 
+   async updatePlacemark(placemark, updatedPlacemark) {
+    placemark.name = updatedPlacemark.name;
+    placemark.category = updatedPlacemark.category;
+    placemark.description = updatedPlacemark.description;
+  },
 
    async deletePlacemark(id) { 
     const index = placemarks.findIndex((placemark) => placemark._id === id);
