@@ -11,7 +11,7 @@ suite("Placemark Model tests", () => {
  let bodyOfWater = null;
   setup(async () => {
     
-    db.init("mem");
+    db.init("firestore");
      await db.categoryStore.deleteAllCategories();
      await db.placemarkStore.deleteAllPlacemarks();
      bodyOfWater = await db.categoryStore.addCategory(river);
@@ -92,4 +92,20 @@ suite("Placemark Model tests", () => {
    assert.strictEqual(placemarks.length, 0);
   });
 
+    test("update placemark - success", async () => {
+   const placemark = await db.placemarkStore.addPlacemark(bodyOfWater._id, liffey);
+    console.log("PLACEMARK: ", placemark);
+  // name and description to be updated to..
+  const updates = {
+    name: "The Dargle",
+    description: "It's in Wicklow"
+  };
+
+  await db.placemarkStore.updatePlacemark(placemark._id, updates);
+
+  // get the updated placemark
+   const returnedPlacemark = await db.placemarkStore.getPlacemarkById(placemark._id);
+  console.log("RETURNED:", returnedPlacemark);
+  assertSubset(updates, returnedPlacemark);
+  });
   });
