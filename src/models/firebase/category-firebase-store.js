@@ -96,6 +96,36 @@ async getUserCategories(userid){
 
 },
 
+   async updateCategory(updatedCategory) {
+ try {
+    if (!updatedCategory._id) return null;
+
+    const docRef = categoryCollection.doc(updatedCategory._id);
+
+    // Extract the img field (or any others you want to update later)
+    const { img } = updatedCategory;
+    const payload = {};
+    if (img !== undefined) payload.img = img;
+
+    // Only update provided fields
+    await docRef.update(payload);
+
+    // Fetch the updated document
+    const updatedSnapshot = await docRef.get();
+    if (updatedSnapshot.exists) {
+      const category = { _id: updatedSnapshot.id, ...updatedSnapshot.data() };
+
+
+      return category;
+    }
+    return null;
+
+  } catch (error) {
+    console.error("Firestore update category error:", error);
+    throw error;
+  }
+},
+
 async deleteCategoryById(id) {
     try {
     await categoryCollection.doc(id).delete();
