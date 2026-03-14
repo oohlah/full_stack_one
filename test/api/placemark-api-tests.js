@@ -31,7 +31,6 @@ suite("Placemark API tests", () => {
 
   test("create placemark", async () => {
     const returnedPlacemark = await placemarkService.createPlacemark(bodyOfWater._id, liffey);
-    liffey._id = returnedPlacemark._id; // liffey fixture missing _id added
     assertSubset(liffey, returnedPlacemark);
   });
 
@@ -81,5 +80,27 @@ suite("Placemark API tests", () => {
     for (let i = 0; i < testPlacemarks.length; i += 1) {
       assertSubset(testPlacemarks[i], returnedCategory.placemarks[i]);
     }
+       
     });
+
+       test("update placemark - success", async () => {
+       const placemark = await placemarkService.createPlacemark(bodyOfWater._id, liffey);
+        console.log("PLACEMARK: ", placemark);
+      // name and description to be updated to..
+      const updates = {
+        name: "The Dargle",
+        description: "It's in Wicklow"
+      };
+    
+      try{
+      await placemarkService.updatePlacemark(placemark._id, updates);
+      } catch (err) {
+         console.error("UPDATE ERROR:", err);
+           throw err;
+}
+      // get the updated placemark
+       const returnedPlacemark = await placemarkService.getPlacemark(placemark._id);
+      console.log("RETURNED:", returnedPlacemark);
+      assertSubset(updates, returnedPlacemark);
+      });
 });
