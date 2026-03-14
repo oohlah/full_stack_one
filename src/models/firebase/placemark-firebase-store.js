@@ -71,6 +71,18 @@ async getPlacemarkById(id) {
   }
 
 },
+
+async updatePlacemark(id, payload){
+    
+  const userRef = placemarkCollection.doc(id);
+  await userRef.update(payload); // only updates details provided
+  const updatedSnapshot = await userRef.get();
+  if(updatedSnapshot.exists){
+    const updatedPlacemark = { _id: updatedSnapshot.id, ...updatedSnapshot.data() };
+    return updatedPlacemark;
+  }
+ return null;
+},
 async deletePlacemark(id) {
     try {
     if (!id) return; 
