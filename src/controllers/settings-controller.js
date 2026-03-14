@@ -78,7 +78,7 @@ export const settingsController = {
 
         const user = request.auth.credentials;
       try{
-        const passwordMatch = await db.userStore.checkCurrentPassword(request.payload.currentPassword, user);
+        const passwordMatch = await db.userStore.checkCurrentPassword(request.payload.currentPassword, user._id);
 
          if (!passwordMatch) {
         console.log("Invalid Current Password Entered");
@@ -90,7 +90,7 @@ export const settingsController = {
 
       // password assigned from new password form
       const password = request.payload.newPassword;
-      const newPassword = await db.userStore.updatePassword(password, user);
+      const newPassword = await db.userStore.updatePassword(password, user._id);
       
       const viewData = {
         title: "User Settings",

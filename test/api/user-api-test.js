@@ -96,11 +96,11 @@ suite("User API tests", () => {
     
       const user = testUsers[0];
       const currentPassword = user.password;
-      const match = await await placemarkService.checkCurrentPassword(currentPassword,user);
+      const match = await await placemarkService.checkCurrentPassword(currentPassword,user._id);
       assert.isTrue(match);
     
        const newPassword = { password: "newPassword"};
-       await placemarkService.updatePassword(newPassword, user);
+       await placemarkService.updatePassword(newPassword, user._id);
     
       // get the updated user
        const updatedUser = await placemarkService.getUserById(user._id);

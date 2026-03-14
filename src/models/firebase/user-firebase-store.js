@@ -105,11 +105,11 @@ async updateUserEmail(id, payload){
  return null;
 },
 
-async checkCurrentPassword(currentPassword, user){
+async checkCurrentPassword(currentPassword, userid){
 
    try {
       // users collection and  doc id
-      const userDoc = await userCollection.doc(user._id).get();
+      const userDoc = await userCollection.doc(userid).get();
 
       if (!userDoc.exists) {
         return false;
@@ -127,9 +127,9 @@ async checkCurrentPassword(currentPassword, user){
 
 },
 
- async updatePassword(newPassword, user) {
+ async updatePassword(newPassword, userid) {
      // user reference
-      const userRef = userCollection.doc(user._id);
+      const userRef = userCollection.doc(userid);
       // get doc from userRef
       const userDoc = await userRef.get();
 

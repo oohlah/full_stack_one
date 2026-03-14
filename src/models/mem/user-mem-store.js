@@ -58,10 +58,10 @@ export const userMemStore = {
     return null;
   },
 
-  async checkCurrentPassword(currentPassword, user){
+  async checkCurrentPassword(currentPassword, userid){
    
   
-    const foundUser = users.find((u) => u._id === user._id);
+    const foundUser = users.find((u) => u._id === userid);
 
     let match;
     if (foundUser) {
@@ -72,9 +72,9 @@ export const userMemStore = {
     return null;
   },
 
-  async updatePassword(newPassword, user) {
+  async updatePassword(newPassword, userid) {
      
-      const foundUser = db.data.users.find((u) => u._id === user._id);
+      const foundUser = db.data.users.find((u) => u._id === userid);
       if (foundUser) {
         foundUser.password = newPassword;
         return foundUser.password;

@@ -106,11 +106,11 @@ test("test password match and update - success", async () => {
 
   const user = testUsers[0];
   const currentPassword = user.password;
-  const match = await db.userStore.checkCurrentPassword(currentPassword,user);
+  const match = await db.userStore.checkCurrentPassword(currentPassword,user._id);
   assert.isTrue(match);
 
    const newPassword = { password: "newPassword"};
-   await db.userStore.updatePassword(newPassword, user);
+   await db.userStore.updatePassword(newPassword, user._id);
 
   // get the updated user
    const updatedUser = await db.userStore.getUserById(user._id);
