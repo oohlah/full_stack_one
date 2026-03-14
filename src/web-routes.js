@@ -30,6 +30,7 @@ export const webRoutes = [
   { method: "GET", path: "/settings", config: settingsController.index },
   { method: "POST", path: "/settings/updatename", config: settingsController.updateName },
   { method: "POST", path: "/settings/updateemail", config: settingsController.updateEmail },
+  { method: "POST", path: "/settings/updatepassword", config: settingsController.updatePassword },
    { method: "GET", path: "/{param*}", handler: { directory: { path: "./public" } }, options: { auth: false } },
 
 
