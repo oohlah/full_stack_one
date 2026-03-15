@@ -42,6 +42,7 @@ export const accountsController = {
       payload: UserCredentialsSpec,
       options: {abortEarly: false},
       failAction: function (request, h, error) {
+
         return h.view("login-view", { title: "Login error", errors: error.details }).takeover().code(400);
       },
     },
@@ -51,7 +52,12 @@ export const accountsController = {
       if (!user || user.password !== password) {
         return h.redirect("/");
       }
-      request.cookieAuth.set({ id: user._id });
+      // store user id and scope in cookie
+       request.cookieAuth.set({
+        id: user._id,
+      scope: user.scope || "user", // default to "user" if missing
+    });
+      // request.cookieAuth.set({ id: user._id });
       return h.redirect("/dashboard");
     },
   },
