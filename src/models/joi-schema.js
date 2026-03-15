@@ -13,6 +13,7 @@ export const UserCredentialsSpec = Joi.object()
 export const UserSpecName = Joi.object().keys({
     firstName: Joi.string().example("Homer").optional(),
     lastName: Joi.string().example("Simpson").optional(),
+    scope: Joi.string().valid("user", "admin").optional()
    
   })
 
@@ -27,9 +28,9 @@ export const UserSpecEmail = Joi.object().keys({
   export const UserSpecPassword = Joi.object().keys({
     currentPassword: Joi.string().example("secret").required(),
     password: Joi.string().example("secret").required(),
+     });
    
-   
-  })
+  
 // USER CREDENTIALS - Additional Properties
 
 export const UserSpec = UserCredentialsSpec.keys({
@@ -39,9 +40,11 @@ export const UserSpec = UserCredentialsSpec.keys({
   })
   .label("UserDetails");
 
+
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
   __v: Joi.number().optional(), // part of mongo
+  scope: Joi.string().valid("user", "admin").optional(),
 }).label("UserDetailsPlus");
 
 export const UserArray = Joi.array().items(UserSpecPlus).label("UserArray");
@@ -78,12 +81,6 @@ export const PlacemarkSpecPlus = PlacemarkSpec
    created: Joi.number().required(),
 }).label("PlacemarkSpecPlus").optional();
 
-
-// // this is for category validation
-// export const PlacemarkArraySpecV = Joi.array().items(PlacemarkSpec).label("PlacemarkArray");
-
-// // using PlacemarkSpec to remove mongo response - without additional properties
-// export const PlacemarkArraySpecV = Joi.array().items(PlacemarkSpec).label("PlacemarkArray");
 
 // PlacemarkSpecPlus - includes additional response properties
 export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("PlacemarkArray").optional();
