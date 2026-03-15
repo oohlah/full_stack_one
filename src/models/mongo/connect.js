@@ -8,8 +8,8 @@ const seedLib = mongooseSeeder.default;
 
 async function seed() {
   const seeder = seedLib(Mongoose);
-  // updated to false to persist data in monggoDB
-  const dbData = await seeder.seed(seedData, { dropDatabase: false, dropCollections: false });
+  // drop seeded data each time local restart
+  const dbData = await seeder.seed(seedData, { dropDatabase: true, dropCollections: true });
   console.log(dbData);
 }
 
