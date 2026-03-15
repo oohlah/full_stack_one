@@ -556,6 +556,25 @@ Installation Command: npm install
 #### Deployment:
 Web Service Deployed on Render: https://full-stack-1-3vib.onrender.com/
 
+#### Technologies Used:
+
+- Node.js
+- Hapi.js
+- Firebase / Firestore
+- MongoDB / Mongoose
+- Handlebars
+- Joi validation
+- Cloudinary image storage
+- JWT authentication
+- Mocha & Chai testing
+- Swagger API documentation
+
+#### Frontend Libraries:
+
+- Bulma (CSS framework)
+- Leaflet (interactive maps)
+- Font Awesome (icons)
+
 #### References:
 
 Geoapi docs and api swagger testing: https://apidocs.geoapify.com/docs/geocoding/
