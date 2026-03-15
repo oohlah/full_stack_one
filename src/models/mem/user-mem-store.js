@@ -10,7 +10,18 @@ export const userMemStore = {
   async addUser(user) {
     user._id = v4();
     users.push(user);
+    user.scope = user.isAdmin ? ["admin", "user"] : ["user"]; // add admin scope to user
     return user;
+  },
+
+     // Set a user as admin — scope is a string
+  async setAdmin(userid) {
+    const foundUser = users.find((u) => u._id === userid);
+    if (foundUser) {
+      foundUser.scope = "admin"; // string, same as Firestore
+      return foundUser;
+    }
+    return null;
   },
 
   async getUserById(id) {
@@ -74,7 +85,7 @@ export const userMemStore = {
 
   async updatePassword(newPassword, userid) {
      
-      const foundUser = db.data.users.find((u) => u._id === userid);
+      const foundUser = users.find((u) => u._id === userid);
       if (foundUser) {
         foundUser.password = newPassword;
         return foundUser.password;

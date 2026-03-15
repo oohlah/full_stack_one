@@ -10,11 +10,30 @@ export const userJsonStore = {
   async addUser(user) {
     await db.read();
     user._id = v4();
+
+     // default role as user
+  if (!user.scope) {
+    user.scope = "user";
+  }
+
     db.data.users.push(user);
     await db.write();
     return user;
   },
 
+  async setAdmin(userid) {
+  await db.read();
+
+  const foundUser = db.data.users.find((u) => u._id === userid);
+
+  if (foundUser) {
+    foundUser.scope = "admin";
+    await db.write();
+    return foundUser;
+  }
+
+  return null;
+},
   async getUserById(id) {
     await db.read();
     let u = db.data.users.find((user) => user._id === id);

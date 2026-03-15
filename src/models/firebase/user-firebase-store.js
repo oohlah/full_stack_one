@@ -49,6 +49,11 @@ async addUser(user) {
     const docRef = userCollection.doc(); // create id
     user._id = docRef.id;
     console.log("ADDING USER TO FIRESTORE:", user);
+
+     if (!user.scope) {
+      user.scope = "user"; // normal user
+    }
+  
     await docRef.set(user);
     
     return user;
@@ -153,6 +158,16 @@ async deleteUserById(id) {
   } catch (error) {
     console.error("Error deleting user: ", error);
   }
+},
+
+  async setAdmin(id) {
+  const userRef = userCollection.doc(id);
+
+  // set scope as a string
+  await userRef.update({ scope: "admin" });
+
+  const updatedDoc = await userRef.get();
+  return { _id: updatedDoc.id, ...updatedDoc.data() };
 },
 
  async deleteAll() {
