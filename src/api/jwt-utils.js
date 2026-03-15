@@ -9,6 +9,7 @@ export function createToken(user) {
   const payload = {
     id: user._id,
     email: user.email,
+    scope: user.scope, // property given -admin or user
   };
   const options = {
     algorithm: "HS256",
