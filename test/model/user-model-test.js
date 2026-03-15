@@ -12,7 +12,7 @@ EventEmitter.setMaxListeners(25);
 suite("User Model tests", () => {
   
   setup(async () => {
-    db.init("json");
+    db.init("mem");
      await db.userStore.deleteAll();
     for (let i = 0; i < testUsers.length; i += 1) {
       // eslint-disable-next-line no-await-in-loop
@@ -102,6 +102,18 @@ test("update a user's email - success", async () => {
   
 });
 
+
+
+test("check status as admin on log in and update staus to admin  - success", async () => {
+
+  const user = await db.userStore.addUser(testUsers[0]);
+  assert.include(user.scope, "user");
+  const updatedUser = await db.userStore.setAdmin(user._id);
+  assert.include(updatedUser.scope, "admin");
+
+
+});
+
 test("test password match and update - success", async () => {
 
   const user = testUsers[0];
@@ -117,7 +129,7 @@ test("test password match and update - success", async () => {
 
   assert.strictEqual(updatedUser.password, updatedUser.password);
 
-});
 
+});
 
 });
