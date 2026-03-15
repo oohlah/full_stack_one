@@ -1,0 +1,32 @@
+{{#each users}}
+  <div class="box box-link-hover-shadow">
+    <h2 class="title is-5">
+      {{firstName}} {{lastName}}
+    </h2>
+
+    <p>{{email}}</p>
+    <p>Role: {{scope}}</p>
+
+    <div class="buttons mt-3">
+
+      
+      <form action="/dashboard/makeadmin/{{_id}}" method="POST">
+        <button class="button is-warning">
+          <span class="icon is-small">
+            <i class="fas fa-user-shield"></i>
+          </span>
+          <span>Make Admin</span>
+        </button>
+      </form>
+
+      
+      <a href="/dashboard/deleteuser/{{_id}}" class="button">
+        <span class="icon is-small">
+          <i class="fas fa-trash"></i>
+        </span>
+        
+      </a>
+
+    </div>
+  </div>
+{{/each}}
