@@ -277,6 +277,49 @@ Stores placemarks in Firestore with a created timestamp to allow queries ordered
 ```
 
 
+### Admin Dashboard
+
+
+![categoryView](public/media/admin_view.png)
+
+A cookie is issued a log in that issues the user with a scope. User scope by default.
+
+The handler runs when the route is accessed, and auth enforces the session strategy and requires the admin scope before Hapi calls the handler.
+
+
+```js
+  { method: "GET", path: "/dashboard/admin", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.adminIndex.handler } },
+  { method: "POST", path: "/dashboard/makeadmin/{id}", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.makeAdmin.handler } },
+  { method: "GET", path: "/dashboard/deleteuser/{id}", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.deleteUser.handler } },
+
+```
+
+All users are sent to the dashboard. Users with scope property of admin are redirected to the adminIndex:
+
+```js
+     // if user is admin - redirect admin dashboard
+      if (loggedInUser.scope === "admin") {
+      return h.redirect("/dashboard/admin");
+    }
+
+```
+
+
+User analytics include deleting a user and setting a user as an admin.
+
+```js
+async setAdmin(id) {
+  const userRef = userCollection.doc(id);
+
+  // set scope as a string
+  await userRef.update({ scope: "admin" });
+
+  const updatedDoc = await userRef.get();
+  return { _id: updatedDoc.id, ...updatedDoc.data() };
+},
+
+```
+
 ### External Api Calls:
 
 
@@ -551,3 +594,9 @@ parital updates in firestore https://rajatamil.medium.com/how-to-partially-updat
 ref for partial update of json file https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign
 
 isTrue assertion in chai for returned boolean values: https://www.chaijs.com/api/assert/#method_istrue
+
+admin priveleges via cookie https://dev.to/imsushant12/mastering-web-development-cookies-authorization-authentication-and-file-uploads-in-nodejs-52j3
+
+Admin authentication with hapi - scopes: https://futurestud.io/tutorials/hapi-restrict-user-access-with-scopes
+
+using scope with jwt hapi https://auth0.com/blog/hapijs-authentication-secure-your-api-with-json-web-tokens/#Authenticating-Users
