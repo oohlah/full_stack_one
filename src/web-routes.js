@@ -13,6 +13,10 @@ export const webRoutes = [
   { method: "POST", path: "/register", config: accountsController.signup },
   { method: "POST", path: "/authenticate", config: accountsController.login },
 
+   { method: "GET", path: "/dashboard/admin", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.adminIndex.handler } },
+  { method: "POST", path: "/dashboard/makeadmin/{id}", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.makeAdmin.handler } },
+  { method: "GET", path: "/dashboard/deleteuser/{id}", config: { auth: { strategy: "session", scope: "admin" }, handler: dashboardController.deleteUser.handler } },
+
   { method: "GET", path: "/dashboard", config: dashboardController.index },
   { method: "POST", path: "/dashboard/addcategory", config: dashboardController.addCategory},
   { method: "GET", path: "/dashboard/deletecategory/{id}", config: dashboardController.deleteCategory },
