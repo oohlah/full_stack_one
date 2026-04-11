@@ -58,7 +58,8 @@ async addCategory(category) {
     try {
     console.log("category being added:", category, typeof category);
     const docRef = await categoryCollection.add(category);
-    return { _id: docRef.id, ...category };
+    return this.getCategoryById(docRef.id);
+    // return { _id: docRef.id, ...category };
   } catch (error) {
     console.error("Error creating category: ", error);
     return null;

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import Boom from "@hapi/boom";
 import { db } from "../models/db.js";
-import { IdSpec,CategorySpec, CategorySpecPlus, CategoryArraySpec, CategoryArraySpecV } from "../models/joi-schema.js";
+import { IdSpec,CategorySpec, CategorySpecPlus, CategoryArraySpec } from "../models/joi-schema.js";
 import { validationError } from "./logger.js";
 
 export const categoryApi = {
@@ -46,6 +46,7 @@ export const categoryApi = {
      validate: { params: { id: IdSpec }, failAction: validationError },
      // returns one category
      response: { schema: CategorySpecPlus, failAction: validationError},
+
   },
 deleteOne: {
     auth: {
@@ -77,7 +78,16 @@ deleteOne: {
     },
     handler: async function (request, h) {
       try {
-        const category = await db.categoryStore.addCategory(request.payload);
+        const loggedInUser = request.auth.credentials;
+
+        const newCategory = {
+          userid: loggedInUser._id,       
+          title: request.payload.title,
+          img: request.payload.img
+        };
+
+      const category = await db.categoryStore.addCategory(newCategory);
+
         if (category) {
           return h.response(category).code(201);
         }

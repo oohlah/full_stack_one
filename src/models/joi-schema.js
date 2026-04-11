@@ -1,6 +1,8 @@
 import Joi from "joi";
 
-export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("a valid ID");
+// export const IdSpec = Joi.alternatives().try(Joi.string(), Joi.object()).description("a valid ID");
+
+export const IdSpec = Joi.string().example("abc123").required();
 
 export const UserCredentialsSpec = Joi.object()
  .keys({
@@ -43,7 +45,6 @@ export const UserSpec = UserCredentialsSpec.keys({
 
 export const UserSpecPlus = UserSpec.keys({
   _id: IdSpec,
-  __v: Joi.number().optional(), // part of mongo
   scope: Joi.string().valid("user", "admin").optional(),
 }).label("UserDetailsPlus");
 
@@ -62,24 +63,35 @@ export const PlacemarkSpec = Joi.object()
     name: Joi.string().example("the liffey").required(),
     category: Joi.string().example("river").optional(),
     description: Joi.string().example("It's a river in Dublin").required(),
-    categoryid: IdSpec,
-    location: Joi.object({
-    lat: Joi.number().required(),
-    lon: Joi.number().required(),
-  }).optional(),
-    temp: Joi.number().optional(),
-    wind: Joi.number().optional(),
+  //   location: Joi.object({
+  //   lat: Joi.number(),
+  //   lon: Joi.number(),
+  // }).optional(),
+  //   temp: Joi.number().optional(),
+  //   wind: Joi.number().optional(),
 
    
 
 }).label("Placemark").optional();
 
-export const PlacemarkSpecPlus = PlacemarkSpec
-.keys({ 
-   _id: IdSpec,
-   __v: Joi.number(),
-   created: Joi.number().required(),
+export const PlacemarkSpecPlus = Joi.object().keys({
+  _id: IdSpec,
+  name: Joi.string().required(),
+  category: Joi.string().optional(),
+  description: Joi.string().required(),
+  categoryid: IdSpec.required(),
+  created: Joi.number().required(),
+
+  location: Joi.object({
+    lat: Joi.number().required(),
+    lon: Joi.number().required(),
+  }).optional(),
+
+  temp: Joi.number().optional(),
+  wind: Joi.number().optional(),
+
 }).label("PlacemarkSpecPlus").optional();
+
 
 
 // PlacemarkSpecPlus - includes additional response properties
@@ -88,17 +100,18 @@ export const PlacemarkArraySpec = Joi.array().items(PlacemarkSpecPlus).label("Pl
 export const CategorySpec =Joi.object()
 .keys({
     title: Joi.string().example("river").required(),
-    userid: IdSpec,
-    placemarks: PlacemarkArraySpec,
-    // placemarks: Joi.array().items(PlacemarkSpecPlus).optional()
+    img: Joi.string().allow(null).optional()
 })
 .label("CategorySpec");
 
 
 
-export const CategorySpecPlus = CategorySpec.keys({
-  _id: IdSpec,
-  __v: Joi.number(),
+export const CategorySpecPlus = Joi.object({
+   _id: IdSpec,
+  title: Joi.string().required(),
+  userid: IdSpec,
+  img: Joi.string().allow(null).optional(),
+  placemarks: PlacemarkArraySpec
 }).label("CategorySpecPlus");
 
 // without additional mongo propeties for validation
