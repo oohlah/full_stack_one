@@ -1,61 +1,70 @@
 {
-  "name": "placemark_app",
-  "version": "1.0.0",
-  "description": "POI placemark application",
-  "keywords": [
-    "poi",
-    "location",
-    "node"
-  ],
-  "homepage": "https://github.com/oohlah/full_stack_one#readme",
-  "bugs": {
-    "url": "https://github.com/oohlah/full_stack_one/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/oohlah/full_stack_one.git"
-  },
-  "license": "MIT",
-  "author": "\"Orla Fitzgerald\"",
-  "type": "module",
-  "main": "src/server.js",
-  "scripts": {
-    "test": "./node_modules/mocha/bin/_mocha --ui tdd test/**/*.js -exit",
-    "api-test": "mocha --ui tdd test/api/**/*.js -exit",
-    "mem-test": "mocha --ui tdd test/model/**/*.js -exit",
-    "start": "node src/server.js",
-    "lint": "./node_modules/.bin/eslint . --ext .js",
-    "dev": "./node_modules/.bin/nodemon  src/server.js"
-  },
-  "devDependencies": {
-    "axios": "^1.13.5",
-    "chai": "^6.2.2",
-    "eslint": "8.57.1",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-import": "^2.32.0",
-    "mocha": "^11.7.5",
-    "nodemon": "^3.1.14",
-    "prettier": "^3.6.2"
-  },
-  "dependencies": {
-    "@hapi/boom": "^10.0.1",
-    "@hapi/cookie": "^12.0.1",
-    "@hapi/hapi": "^21.4.3",
-    "@hapi/inert": "^7.1.0",
-    "@hapi/vision": "^7.0.3",
-    "cloudinary": "^2.9.0",
-    "dotenv": "^17.2.3",
-    "firebase": "^12.10.0",
-    "firebase-admin": "^13.7.0",
-    "handlebars": "^4.7.8",
-    "hapi-auth-jwt2": "^11.0.0",
-    "hapi-swagger": "^17.3.2",
-    "joi": "^17.13.3",
-    "jsonwebtoken": "^9.0.3",
-    "lowdb": "^7.0.1",
-    "mais-mongoose-seeder": "^1.0.7",
-    "mongoose": "^9.2.2",
-    "uuid": "^13.0.0"
-  }
+    "name": "placemark-app",
+    "version": "1.1.0",
+    "description": "First Typescript version of Placemark App",
+    "main": "dist/server.js",
+    "keywords": [
+        "poi",
+        "location",
+        "node"
+    ],
+    "homepage": "https://github.com/oohlah/full_stack_one#readme",
+    "bugs": {
+        "url": "https://github.com/oohlah/full_stack_one/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+ssh://git@github.com/oohlah/full_stack_one.git"
+    },
+    "license": "MIT",
+    "author": "\"Orla Fitzgerald\"",
+    "type": "module",
+    "scripts": {
+        "build": "tsc -p tsconfig.json && mkdir -p dist/views dist/public && cp -R src/views/* dist/views/ && cp -R public/* dist/public/",
+        "start": "npm run build && node dist/server.js",
+        "dev": "tsx watch src/server.ts",
+        "test": "npm run build && mocha --ui tdd \"test/**/*.js\" --exit",
+        "api-test": "node --import tsx node_modules/mocha/bin/mocha.js \"test/**/*.ts\"",
+        "mem-test": "node --import tsx node_modules/mocha/bin/mocha.js \"test/model/**/*.ts\" --exit",
+        "lint": "./node_modules/.bin/eslint . --ext .js"
+    },
+    "devDependencies": {
+        "@types/hapi__cookie": "^12.0.5",
+        "@types/jsonwebtoken": "^9.0.10",
+        "@types/mocha": "^10.0.10",
+        "@types/node": "^24.10.0",
+        "@typescript-eslint/eslint-plugin": "^8.46.2",
+        "@typescript-eslint/parser": "^8.46.2",
+        "axios": "^1.13.5",
+        "chai": "^6.2.2",
+        "eslint": "8.57.1",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-import": "^2.32.0",
+        "mocha": "^11.7.5",
+        "nodemon": "^3.1.14",
+        "prettier": "^3.6.2",
+        "tsx": "^4.21.0",
+        "typescript": "^6.0.2"
+    },
+    "dependencies": {
+        "@hapi/boom": "^10.0.1",
+        "@hapi/cookie": "^12.0.1",
+        "@hapi/hapi": "^21.4.3",
+        "@hapi/inert": "^7.1.0",
+        "@hapi/vision": "^7.0.3",
+        "cloudinary": "^2.9.0",
+        "dotenv": "^17.2.3",
+        "firebase": "^12.10.0",
+        "firebase-admin": "^13.7.0",
+        "handlebars": "^4.7.8",
+        "hapi-auth-jwt2": "^11.0.0",
+        "hapi-swagger": "^17.3.2",
+        "joi": "^17.13.3",
+        "jsonwebtoken": "^9.0.3",
+        "lowdb": "^7.0.1",
+        "mais-mongoose-seeder": "^1.0.7",
+        "mongoose": "^9.2.2",
+        "uuid": "^13.0.0"
+    }
 }
