@@ -13,7 +13,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
 // import { db } from "./models/db.js";
-import { accountsController} from "./controllers/accounts-controller.js";
+// import { accountsController} from "./controllers/account-controller.js";
+
 import { validate } from "./api/jwt-utils.js";
 import { apiRoutes } from "./api-routes.js";
 
@@ -67,6 +68,7 @@ async function init() {
     },
   ]);
 
+  console.log("STEP 4: Plugins registered");
   server.validator(Joi);
   server.views({
     engines: {
@@ -80,7 +82,7 @@ async function init() {
     isCached: false,
   });
   
-
+    console.log("STEP 5: Views configured");
    server.auth.strategy("session", "cookie", {
     cookie: {
       name: process.env.cookie_name,
@@ -96,7 +98,7 @@ async function init() {
     verifyOptions: { algorithms: ["HS256"] },
   });
  
-
+ console.log("STEP 6: Auth configured");
   server.auth.default("session");
 
 
@@ -104,8 +106,11 @@ async function init() {
   // db.init("firebase");
 
   // db.init("mongo");
+   console.log("STEP 7: Loading routes");
   server.route(webRoutes);
   server.route(apiRoutes);
+
+  console.log("STEP 8: Starting server");
   await server.start();
   await server.register(Inert);
   console.log("Server running on %s", server.info.uri);
