@@ -21,6 +21,8 @@ import { apiRoutes } from "./api-routes.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log("Starting server...")
+
 const result = dotenv.config();
 if (result.error) {
   console.log(result.error.message);
@@ -44,12 +46,16 @@ const swaggerOptions = {
 };
 
 async function init() {
+  console.log("STEP 1: Creating Hapi server")
   const server = Hapi.server({
     port: process.env.PORT || 4000,
     host: "0.0.0.0", // default host on render
     routes: { cors: true },
+     
   });
-  
+    console.log("STEP 2: Server created")
+
+    console.log("STEP 3: Registering plugins (Cookie, JWT, Swagger)")
     await server.register(Cookie);
     await server.register(jwt);
     await server.register([
@@ -60,7 +66,7 @@ async function init() {
       options: swaggerOptions,
     },
   ]);
-
+   console.log("STEP 4: Plugins registered")
   server.validator(Joi);
   server.views({
     engines: {
@@ -73,6 +79,7 @@ async function init() {
     layout: true,
     isCached: false,
   });
+  console.log("STEP 5: Views configured")
 
    server.auth.strategy("session", "cookie", {
     cookie: {
@@ -88,9 +95,14 @@ async function init() {
     validate: validate,
     verifyOptions: { algorithms: ["HS256"] },
   });
+  console.log("STEP 6: Auth strategies configured")
+
   server.auth.default("session");
 
+
+  console.log("STEP 7: About to init DB")
   db.init("firebase");
+  console.log("STEP 7b: DB init finished")
   // db.init("mongo");
   server.route(webRoutes);
   server.route(apiRoutes);
