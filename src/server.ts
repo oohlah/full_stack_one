@@ -12,7 +12,7 @@ import * as jwt from "hapi-auth-jwt2";
 import path from "path";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
-import { db } from "./models/db.js";
+// import { db } from "./models/db.js";
 import { accountsController} from "./controllers/accounts-controller.js";
 import { validate } from "./api/jwt-utils.js";
 import { apiRoutes } from "./api-routes.js";
@@ -66,7 +66,7 @@ async function init() {
       options: swaggerOptions,
     },
   ]);
-   console.log("STEP 4: Plugins registered")
+
   server.validator(Joi);
   server.views({
     engines: {
@@ -79,7 +79,7 @@ async function init() {
     layout: true,
     isCached: false,
   });
-  console.log("STEP 5: Views configured")
+  
 
    server.auth.strategy("session", "cookie", {
     cookie: {
@@ -95,14 +95,14 @@ async function init() {
     validate: validate,
     verifyOptions: { algorithms: ["HS256"] },
   });
-  console.log("STEP 6: Auth strategies configured")
+ 
 
   server.auth.default("session");
 
 
-  console.log("STEP 7: About to init DB")
-  db.init("firebase");
-  console.log("STEP 7b: DB init finished")
+ 
+  // db.init("firebase");
+
   // db.init("mongo");
   server.route(webRoutes);
   server.route(apiRoutes);
@@ -117,3 +117,4 @@ process.on("unhandledRejection", (err) => {
 });
 
 init();
+
