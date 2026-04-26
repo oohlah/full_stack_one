@@ -32,9 +32,10 @@ export const categoryController = {
       const coords: { lat: number; lon: number } | null = await geoUtils.getPlacemarkCoordinates(placemarkName);
       // console.log("LAT: ", coords.lat, "LON:", coords.lon);
       
-      if (!coords) {
-       throw new Error("Could not get coordinates");
-         }
+     if (!coords) {
+      console.error("Geo lookup failed, stopping request");
+      return h.response({ error: "Invalid location" }).code(400);
+      }
      
 
       const weather = await geoUtils.getWeatherFromCoordinates(coords);
@@ -53,6 +54,9 @@ export const categoryController = {
       };
       console.log(newPlacemark);
       
+      console.log("COORDS FROM GEO:", coords);
+     console.log("FULL PAYLOAD:", payload);
+
       await db.placemarkStore.addPlacemark(category._id, newPlacemark);
       const placemarks = await db.placemarkStore.getPlacemarksByCategoryId(category._id); 
       console.log("CATEGORY PLACEMARKS:", placemarks);

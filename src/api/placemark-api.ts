@@ -5,6 +5,7 @@ import { validationError } from "./logger.js";
 import { Request, ResponseToolkit } from "@hapi/hapi";
 import { Placemark } from "../types/object-types.js";
 import { Err } from "joi";
+import { geoUtils } from "../utils/geo_utils.js"; 
 
 export const placemarkApi = {
   find: {
@@ -13,6 +14,7 @@ export const placemarkApi = {
     },
     handler: async function (request: Request, h: ResponseToolkit): Promise<Placemark[] | Boom.Boom> {
         try {
+
         const placemarks = await db.placemarkStore.getAllPlacemarks();
         if (!placemarks){
           return [];
@@ -60,11 +62,44 @@ export const placemarkApi = {
     },
     handler: async function (request: Request, h: ResponseToolkit) {
          try {
-        const placemark = await db.placemarkStore.addPlacemark(request.params.id, request.payload);
-        if (placemark) {
-          return h.response(placemark).code(201);
-        }
-        return Boom.badImplementation("error creating placemark");
+
+              ///////ADDDED TO ALLOW GEOUTILS TO WORK IN FRONTEND
+
+              
+     const category = await db.categoryStore.getCategoryById(request.params.id);
+
+      // const categoryId = request.params.id;
+      const payload = request.payload as any;
+
+    
+      const coords = await geoUtils.getPlacemarkCoordinates(payload.name);
+
+      if (!coords) {
+        return Boom.badRequest("Could not resolve location");
+      }
+
+      
+      const weather = await geoUtils.getWeatherFromCoordinates(coords);
+
+      // Final Object
+      const newPlacemark = {
+        name: payload.name,
+        category: category.title,
+        // categoryid: categoryId,
+        description: payload.description,
+        location: coords,
+        temp: weather?.temperature ?? null,
+        wind: weather?.windSpeed ?? null,
+        created: Date.now()
+      };
+
+//////^^^^^ADDED TO ALLOW GEOUTILS TO WORK IN FRONTEND
+       
+
+        const created = await db.placemarkStore.addPlacemark(category._id, newPlacemark);
+      
+          return h.response(created).code(201);
+    
       } catch (err) {
         return Boom.serverUnavailable("Database Error:", err);
       }

@@ -12,8 +12,8 @@ import * as jwt from "hapi-auth-jwt2";
 import path from "path";
 import { fileURLToPath } from "url";
 import { webRoutes } from "./web-routes.js";
-// import { db } from "./models/db.js";
-// import { accountsController} from "./controllers/account-controller.js";
+import { db } from "./models/db.js";
+import { accountsController} from "./controllers/accounts-controller.js";
 
 import { validate } from "./api/jwt-utils.js";
 import { apiRoutes } from "./api-routes.js";
@@ -103,7 +103,7 @@ async function init() {
 
 
  
-  // db.init("firebase");
+  db.init("firebase");
 
   // db.init("mongo");
    console.log("STEP 7: Loading routes");

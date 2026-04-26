@@ -61,8 +61,9 @@ export const PlacemarkSpecUpdate = Joi.object()
 export const PlacemarkSpec = Joi.object()
 .keys({
     name: Joi.string().example("the liffey").required(),
-    category: Joi.string().example("river").optional(),
+    // category: Joi.string().example("river").optional(),
     description: Joi.string().allow("").optional(),
+    categoryid: IdSpec.required()
  
 }).label("Placemark").optional();
 
@@ -79,7 +80,6 @@ export const PlacemarkSpecCreate = Joi.object().keys({
 export const PlacemarkSpecPlus = Joi.object().keys({
   _id: IdSpec,
   name: Joi.string().required(),
-  category: Joi.string().optional(),
   description: Joi.string().allow("").optional(),
   categoryid: IdSpec.required(),
   created: Joi.number().required(),

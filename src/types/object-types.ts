@@ -48,17 +48,17 @@ export type Location = {
   lon: number;
 };
 
-export type Placemark = {
-_id: string,
-name: string;
-category?: string | null;
-created: number;
-description: string;
-location?: Location | null;
-temp?: number | null;
-wind?: number | null;
 
-}
+export type Placemark = {
+  _id: string;
+  name: string;
+  categoryid: string;
+  created: number;
+  description: string;
+  location?: Location | null;
+  temp?: number | null;
+  wind?: number | null;
+};
 
 export type PlacemarkCreate = {
   name: string;
@@ -72,9 +72,9 @@ export type PlacemarkCreate = {
 // FIRESTORE TYPES:
 // ---------------------
 
+
 export type FirebasePlacemark = {
   name: string;
-  category?: string;
   categoryid: string;
   created: number;
   description: string;

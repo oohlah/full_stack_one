@@ -76,7 +76,7 @@ const placemarkDoc = await PlacemarkMongoose.findById(placemark._id);
   }
 
   placemarkDoc.name = updatedPlacemark.name;
-  (placemarkDoc as any).category = updatedPlacemark.category;
+  // (placemarkDoc as any).category = updatedPlacemark.category;
   placemarkDoc.description = updatedPlacemark.description;
 
   await placemarkDoc.save();

@@ -56,44 +56,47 @@ async getPlacemarkById(id: string): Promise<FirebasePlacemark | FirebasePlacemar
  
   },
 
- async addPlacemark(categoryid: string, placemark: PlacemarkCreate): Promise<Placemark> {
-    
-    // remove id if it exists
-    // const { _id, ...cleanPlacemark } = placemark;
+  async addPlacemark(categoryid: string, placemark: PlacemarkCreate): Promise<Placemark> {
+  try {
+    if (!categoryid) throw new Error("Missing categoryid");
+    if (!placemark.name) throw new Error("Missing placemark name");
+    if (!placemark.description) throw new Error("Missing description");
 
-    // if (!categoryid) throw new Error("Cannot add placemark without a categoryid");
-    // // merge categoryid with placemark
-    // const placemarkData = {...cleanPlacemark, categoryid: categoryid, created: Date.now()};  
-    // const docRef = await placemarkCollection.add(placemarkData);
-    // console.log("Placemark created with ID: ", docRef.id);
-    // return { _id: docRef.id, ...placemarkData };
-     try {
-
-    const cleanPlacemark = placemark;
-
-    if (!categoryid) throw new Error("Cannot add placemark without a categoryid");
-
-    const placemarkData = {
-      ...cleanPlacemark,
+     const placemarkData: FirebasePlacemark = {
+      name: placemark.name,
+      description: placemark.description,
       categoryid,
       created: Date.now()
     };
 
-    const docRef = await placemarkCollection.add(placemarkData);
 
-    console.log("Placemark created with ID: ", docRef.id);
+    if (placemark.location) {
+      placemarkData.location = placemark.location;
+    }
+
+   if (placemark.temp != null) {
+  placemarkData.temp = placemark.temp;
+}
+
+if (placemark.wind != null) {
+  placemarkData.wind = placemark.wind;
+}
+
+    console.log("PLACEMARK INTO FIRESTORE:", placemarkData);
+
+    const docRef = await placemarkCollection.add(placemarkData);
 
     return {
       _id: docRef.id,
       ...placemarkData
     };
-    
-  } catch (error) {
-    console.error("Error creating placemark: ", error);
-     throw error;
-  }
 
+  } catch (error) {
+    console.error("Error creating placemark:", error);
+    throw error;
+  }
 },
+
 
 async updatePlacemark(id: string, payload: any): Promise<FirebasePlacemarkDoc | null>{
 try{ 
